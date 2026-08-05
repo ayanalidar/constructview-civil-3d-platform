@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConstructView — Civil 3D Platform</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="2" y="20" width="8" height="18" rx="1" fill="currentColor"/>
+            <rect x="13" y="10" width="8" height="28" rx="1" fill="currentColor"/>
+            <rect x="24" y="14" width="8" height="24" rx="1" fill="currentColor" opacity="0.6"/>
+            <rect x="2" y="16" width="30" height="3" rx="1" fill="var(--color-accent)"/>
+          </svg>
+        </div>
+        <span class="brand-name" id="brandName">ConstructView</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item active">
+          <i class="fa-solid fa-grid-2"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="projects.html" class="nav-item">
+          <i class="fa-solid fa-folder-tree"></i>
+          <span>Projects</span>
+        </a>
+        <a href="viewer.html" class="nav-item">
+          <i class="fa-solid fa-cube"></i>
+          <span>3D Viewer</span>
+        </a>
+        <a href="tasks.html" class="nav-item">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Tasks</span>
+        </a>
+        <a href="team.html" class="nav-item">
+          <i class="fa-solid fa-users"></i>
+          <span>Team</span>
+        </a>
+        <a href="settings.html" class="nav-item">
+          <i class="fa-solid fa-sliders"></i>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar">AJ</div>
+          <div class="user-info">
+            <span class="user-name">Alex Johnson</span>
+            <span class="user-role" id="userRoleDisplay">Project Manager</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+      <!-- Top bar -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon" id="sidebarToggle" aria-label="Toggle sidebar">
+            <i class="fa-solid fa-bars"></i>
+          </button>
+          <div class="breadcrumb">
+            <span>Dashboard</span>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn-icon has-badge" aria-label="Notifications">
+            <i class="fa-solid fa-bell"></i>
+            <span class="badge">3</span>
+          </button>
+          <button class="btn-icon" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Page content -->
+      <div class="page-content">
+        <div class="page-header">
+          <div>
+            <h1>Welcome back, Alex</h1>
+            <p class="text-muted">Here's what's happening across your projects today.</p>
+          </div>
+          <div class="header-actions">
+            <button class="btn btn-accent" onclick="location.href='viewer.html'">
+              <i class="fa-solid fa-plus"></i> New Model Upload
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="--stat-color: var(--color-accent)">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+            <div class="stat-body">
+              <span class="stat-value">24</span>
+              <span class="stat-label">Active Projects</span>
+            </div>
+            <div class="stat-trend up">
+              <i class="fa-solid fa-arrow-trend-up"></i> 12%
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--stat-color: #10b981">
+              <i class="fa-solid fa-cubes"></i>
+            </div>
+            <div class="stat-body">
+              <span class="stat-value">156</span>
+              <span class="stat-label">3D Models</span>
+            </div>
+            <div class="stat-trend up">
+              <i class="fa-solid fa-arrow-trend-up"></i> 8%
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--stat-color: #6366f1">
+              <i class="fa-solid fa-users-gear"></i>
+            </div>
+            <div class="stat-body">
+              <span class="stat-value">42</span>
+              <span class="stat-label">Team Members</span>
+            </div>
+            <div class="stat-trend neutral">
+              <i class="fa-solid fa-minus"></i> Same
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--stat-color: #f59e0b">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="stat-body">
+              <span class="stat-value">7</span>
+              <span class="stat-label">Open Issues</span>
+            </div>
+            <div class="stat-trend down">
+              <i class="fa-solid fa-arrow-trend-down"></i> 5%
+            </div>
+          </div>
+        </div>
+
+        <!-- Two-column layout -->
+        <div class="content-grid">
+          <!-- Recent projects -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Projects</h3>
+              <a href="projects.html" class="link">View all <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="project-list" id="recentProjects">
+              <div class="project-row">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #1e3a5f, #2d5a87)"><i class="fa-solid fa-house"></i></div>
+                <div class="project-info">
+                  <span class="project-name">Skyline Residences — Phase 3</span>
+                  <span class="project-meta">Residential · 85% complete · 24 models</span>
+                </div>
+                <div class="project-progress">
+                  <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+                  <span>85%</span>
+                </div>
+              </div>
+              <div class="project-row">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #5c3d2e, #8b5e3c)"><i class="fa-solid fa-road"></i></div>
+                <div class="project-info">
+                  <span class="project-name">NH-48 Expressway Extension</span>
+                  <span class="project-meta">Infrastructure · 62% complete · 18 models</span>
+                </div>
+                <div class="project-progress">
+                  <div class="progress-bar"><div class="progress-fill" style="width:62%"></div></div>
+                  <span>62%</span>
+                </div>
+              </div>
+              <div class="project-row">
+                <div class="project-thumb" style="background: linear-gradient(135deg, #1a3a2a, #2d6b4f)"><i class="fa-solid fa-hospital"></i></div>
+                <div class="project-info">
+                  <span class="project-name">Central District Hospital</span>
+                  <span class="project-meta">Healthcare · 41% complete · 32 models</span>
+                </div>
+                <div class="project-progress">
+                  <div class="progress-bar"><div class="progress-fill" style="width:41%"></div></div>
+                  <span>41%</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity feed -->
+          <div class="card">
+            <div class="card-header">
+              <h3>Recent Activity</h3>
+            </div>
+            <div class="activity-feed" id="activityFeed">
+              <div class="activity-item">
+                <div class="activity-dot accent"></div>
+                <div class="activity-body">
+                  <span class="activity-text"><strong>Sarah Chen</strong> uploaded new hospital MEP model</span>
+                  <span class="activity-time">10 min ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot green"></div>
+                <div class="activity-body">
+                  <span class="activity-text"><strong>Mike Rivera</strong> resolved clash detection issue on NH-48</span>
+                  <span class="activity-time">28 min ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot purple"></div>
+                <div class="activity-body">
+                  <span class="activity-text"><strong>Alex Johnson</strong> added annotation on Phase 3 structural</span>
+                  <span class="activity-time">1 hour ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot amber"></div>
+                <div class="activity-body">
+                  <span class="activity-text"><strong>Priya Patel</strong> flagged interference in plumbing layer</span>
+                  <span class="activity-time">3 hours ago</span>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-dot accent"></div>
+                <div class="activity-body">
+                  <span class="activity-text"><strong>Auto-sync</strong> completed for 3 project repositories</span>
+                  <span class="activity-time">5 hours ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project type distribution -->
+        <div class="card" style="margin-top: 1.5rem;">
+          <div class="card-header">
+            <h3>Project Distribution</h3>
+          </div>
+          <div class="type-distribution">
+            <div class="type-bar-group">
+              <div class="type-label">Residential</div>
+              <div class="type-bar-wrapper"><div class="type-bar" style="width:40%; --bar-color: var(--color-accent)"><span>10</span></div></div>
+            </div>
+            <div class="type-bar-group">
+              <div class="type-label">Infrastructure</div>
+              <div class="type-bar-wrapper"><div class="type-bar" style="width:24%; --bar-color: #f97316"><span>6</span></div></div>
+            </div>
+            <div class="type-bar-group">
+              <div class="type-label">Healthcare</div>
+              <div class="type-bar-wrapper"><div class="type-bar" style="width:16%; --bar-color: #10b981"><span>4</span></div></div>
+            </div>
+            <div class="type-bar-group">
+              <div class="type-label">Commercial</div>
+              <div class="type-bar-wrapper"><div class="type-bar" style="width:12%; --bar-color: #6366f1"><span>3</span></div></div>
+            </div>
+            <div class="type-bar-group">
+              <div class="type-label">Industrial</div>
+              <div class="type-bar-wrapper"><div class="type-bar" style="width:8%; --bar-color: #8b5cf6"><span>1</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

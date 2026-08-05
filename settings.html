@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings — ConstructView</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="2" y="20" width="8" height="18" rx="1" fill="currentColor"/>
+            <rect x="13" y="10" width="8" height="28" rx="1" fill="currentColor"/>
+            <rect x="24" y="14" width="8" height="24" rx="1" fill="currentColor" opacity="0.6"/>
+            <rect x="2" y="16" width="30" height="3" rx="1" fill="var(--color-accent)"/>
+          </svg>
+        </div>
+        <span class="brand-name" id="brandName">ConstructView</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-grid-2"></i><span>Dashboard</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-tree"></i><span>Projects</span></a>
+        <a href="viewer.html" class="nav-item"><i class="fa-solid fa-cube"></i><span>3D Viewer</span></a>
+        <a href="tasks.html" class="nav-item"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
+        <a href="team.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Team</span></a>
+        <a href="settings.html" class="nav-item active"><i class="fa-solid fa-sliders"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-badge">
+          <div class="avatar">AJ</div>
+          <div class="user-info">
+            <span class="user-name">Alex Johnson</span>
+            <span class="user-role">Project Manager</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="btn-icon" id="sidebarToggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+          <div class="breadcrumb"><span>Settings</span> / <span>White-Label</span></div>
+        </div>
+        <div class="topbar-right">
+          <button class="btn btn-accent btn-sm" id="saveSettings"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <div class="page-header">
+          <div>
+            <h1>White-Label Settings</h1>
+            <p class="text-muted">Customize the platform with your client's branding. Changes preview live.</p>
+          </div>
+          <button class="btn btn-outline btn-sm" id="resetSettings"><i class="fa-solid fa-rotate-left"></i> Reset Defaults</button>
+        </div>
+
+        <div class="settings-grid">
+          <!-- Brand Identity -->
+          <div class="settings-section">
+            <h3><i class="fa-solid fa-palette"></i> Brand Identity</h3>
+
+            <div class="form-group">
+              <label>Platform Name</label>
+              <input type="text" id="brandNameInput" placeholder="ConstructView" value="ConstructView">
+            </div>
+
+            <div class="form-group">
+              <label>Custom Domain</label>
+              <input type="text" id="domainInput" placeholder="app.yourcompany.com">
+            </div>
+
+            <div class="form-group">
+              <label>Logo Upload</label>
+              <div class="file-upload-zone" style="padding:1rem;">
+                <i class="fa-solid fa-image" style="font-size:1.25rem;"></i>
+                <p style="font-size:0.8rem;">Drop logo file or click to upload</p>
+                <span style="font-size:0.7rem;">SVG or PNG, max 2MB</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Theme Colors -->
+          <div class="settings-section">
+            <h3><i class="fa-solid fa-droplet"></i> Theme Colors</h3>
+
+            <div class="form-group">
+              <label>Primary Color</label>
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <input type="color" id="primaryColorInput" value="#0ea5e9">
+                <span style="font-size:0.85rem;font-family:var(--font-mono);" id="primaryColorHex">#0ea5e9</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Accent Color</label>
+              <div style="display:flex;align-items:center;gap:0.75rem;">
+                <input type="color" id="accentColorInput" value="#0ea5e9">
+                <span style="font-size:0.85rem;font-family:var(--font-mono);" id="accentColorHex">#0ea5e9</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Quick Presets</label>
+              <div class="color-presets" id="colorPresets">
+                <!-- Rendered by JS -->
+              </div>
+            </div>
+
+            <div class="theme-preview">
+              <div class="preview-bar" style="background:var(--color-accent)"></div>
+              <div class="preview-text">Live theme preview — changes apply immediately</div>
+            </div>
+          </div>
+
+          <!-- Roles & Permissions -->
+          <div class="settings-section">
+            <h3><i class="fa-solid fa-shield-halved"></i> Roles &amp; Permissions</h3>
+
+            <div class="form-group">
+              <label>Default User Role</label>
+              <select>
+                <option>Project Manager (full access)</option>
+                <option>Designer (view + edit + annotate)</option>
+                <option>Site Worker (view + report issues)</option>
+                <option>Client (view-only, watermarked)</option>
+                <option>Read-Only (view, no download)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Client Access Settings</label>
+              <label style="display:flex;align-items:center;gap:0.5rem;margin-top:0.5rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox" checked> Allow client to download models
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;margin-top:0.25rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox" checked> Watermark exported screenshots
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;margin-top:0.25rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox"> Require approval before sharing externally
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label>Custom Role Name</label>
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;">
+                <select style="flex:1;">
+                  <option>Project Manager</option>
+                  <option>Designer</option>
+                  <option>Site Worker</option>
+                  <option>Client</option>
+                </select>
+                <button class="btn btn-outline btn-sm" style="flex-shrink:0;">Rename</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Export & Watermarking -->
+          <div class="settings-section">
+            <h3><i class="fa-solid fa-file-export"></i> Export &amp; Watermarking</h3>
+
+            <div class="form-group">
+              <label>Watermark Text</label>
+              <input type="text" value="Confidential — [Client Name]" placeholder="Watermark text">
+            </div>
+
+            <div class="form-group">
+              <label>Watermark Position</label>
+              <select>
+                <option>Bottom-right corner</option>
+                <option>Center (diagonal, tiled)</option>
+                <option>Top-left corner</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Export Formats</label>
+              <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox" checked> PDF report
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox" checked> Screenshot (PNG)
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox"> 3D model (GLB download)
+              </label>
+              <label style="display:flex;align-items:center;gap:0.5rem;font-size:0.85rem;cursor:pointer;">
+                <input type="checkbox"> BIM data export (CSV)
+              </label>
+            </div>
+          </div>
+
+          <!-- Custom Fields -->
+          <div class="settings-section">
+            <h3><i class="fa-solid fa-table-list"></i> Custom Project Fields</h3>
+            <p style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:1rem;">
+              Add fields that appear on all project forms for your client.
+            </p>
+
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:var(--color-bg-input);border-radius:var(--radius-md);">
+                <span style="flex:1;font-size:0.85rem;">Contract Number</span>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">Text field</span>
+                <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:var(--color-bg-input);border-radius:var(--radius-md);">
+                <span style="flex:1;font-size:0.85rem;">Budget Code</span>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">Text field</span>
+                <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <div style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem;background:var(--color-bg-input);border-radius:var(--radius-md);">
+                <span style="flex:1;font-size:0.85rem;">Inspection Date</span>
+                <span style="font-size:0.75rem;color:var(--color-text-muted);">Date picker</span>
+                <button class="btn btn-ghost btn-sm"><i class="fa-solid fa-xmark"></i></button>
+              </div>
+              <button class="btn btn-outline btn-sm" style="justify-content:center;margin-top:0.5rem;">
+                <i class="fa-solid fa-plus"></i> Add Custom Field
+              </button>
+            </div>
+          </div>
+
+          <!-- Danger Zone -->
+          <div class="settings-section" style="border-color:var(--color-error);">
+            <h3 style="color:var(--color-error);"><i class="fa-solid fa-triangle-exclamation"></i> Danger Zone</h3>
+            <p style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:1rem;">
+              These actions affect all users on this tenant. Proceed with caution.
+            </p>
+            <div style="display:flex;flex-direction:column;gap:0.75rem;">
+              <button class="btn btn-outline" style="border-color:var(--color-warning);color:var(--color-warning);">
+                <i class="fa-solid fa-rotate"></i> Reset All Branding
+              </button>
+              <button class="btn btn-danger btn-sm" style="align-self:flex-start;">
+                <i class="fa-solid fa-trash"></i> Delete Tenant Data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script>
+    // Live primary color hex display
+    const primaryInput = document.getElementById('primaryColorInput');
+    const primaryHex = document.getElementById('primaryColorHex');
+    const accentInput = document.getElementById('accentColorInput');
+    const accentHex = document.getElementById('accentColorHex');
+
+    if (primaryInput && primaryHex) {
+      primaryInput.addEventListener('input', () => {
+        primaryHex.textContent = primaryInput.value;
+      });
+    }
+    if (accentInput && accentHex) {
+      accentInput.addEventListener('input', () => {
+        accentHex.textContent = accentInput.value;
+      });
+    }
+  </script>
+  <script src="js/app.js"></script>
+</body>
+</html>
