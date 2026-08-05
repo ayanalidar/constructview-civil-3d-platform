@@ -102,13 +102,23 @@
             </div>
 
             <div class="panel-section">
-              <h4>Views</h4>
+              <h4>Analysis</h4>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;">
-                <button class="btn btn-outline btn-sm" style="justify-content:center;">Top</button>
-                <button class="btn btn-outline btn-sm" style="justify-content:center;">Front</button>
-                <button class="btn btn-outline btn-sm" style="justify-content:center;">Right</button>
-                <button class="btn btn-outline btn-sm" style="justify-content:center;">3D</button>
+                <button class="btn btn-outline btn-sm" onclick="window.showClashModal()" style="justify-content:center;">
+                  <i class="fa-solid fa-triangle-exclamation"></i> Clash
+                </button>
+                <button class="btn btn-outline btn-sm" onclick="window.__viewer3d?.clearSections();window.showSectionCutModal();" style="justify-content:center;">
+                  <i class="fa-solid fa-scissors"></i> Section
+                </button>
               </div>
+            </div>
+
+            <div class="panel-section">
+              <h4>BIM Info</h4>
+              <div id="liveBimInfo" style="font-size:0.8rem;color:var(--color-text-muted);padding:0.25rem 0;display:none;">
+                Click a building element to inspect
+              </div>
+              <div id="modelStats" style="font-size:0.75rem;color:var(--color-text-muted);margin-top:0.25rem;"></div>
             </div>
           </div>
 
@@ -171,13 +181,94 @@
       const viewer = new Viewer3D(canvas);
       window.__viewer3d = viewer;
 
+      // Override section-cut modal to use real clipping
+      window.showSectionCutModal = function() {
+        const existing = document.querySelector('.modal-overlay');
+        if (existing) existing.remove();
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `
+          <div class="modal" id="section-cut-modal">
+            <h3><i class="fa-solid fa-scissors"></i> Section Cut</h3>
+            <div class="form-group"><label>Axis</label><select id="scAxis"><option value="x">X-Axis (front/back)</option><option value="y">Y-Axis (top/bottom)</option><option value="z">Z-Axis (left/right)</option></select></div>
+            <div class="form-group"><label>Position</label><input type="range" id="scPos" min="-8" max="14" value="0" step="0.5" style="width:100%"></div>
+            <p id="scPosLabel" style="font-size:0.8rem;color:var(--color-text-muted);">Position: 0m</p>
+            <div class="modal-actions">
+              <button class="btn btn-outline btn-sm" id="scClear">Clear</button>
+              <button class="btn btn-ghost btn-sm" onclick="closeModal()">Cancel</button>
+              <button class="btn btn-accent btn-sm" id="scApply">Apply Cut</button>
+            </div>
+          </div>`;
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+        document.body.appendChild(overlay);
+        const range = document.getElementById('scPos');
+        const label = document.getElementById('scPosLabel');
+        range.addEventListener('input', () => { label.textContent = 'Position: ' + range.value + 'm'; });
+        document.getElementById('scApply').addEventListener('click', () => {
+          const axis = document.getElementById('scAxis').value;
+          const pos = parseFloat(document.getElementById('scPos').value);
+          viewer.toggleSectionCut(axis, pos, true);
+          closeModal();
+        });
+        document.getElementById('scClear').addEventListener('click', () => {
+          viewer.clearSections();
+          closeModal();
+        });
+      };
+
+      // Clash detection modal
+      window.showClashModal = function() {
+        const results = viewer.runClashDetection();
+        const existing = document.querySelector('.modal-overlay');
+        if (existing) existing.remove();
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        const rows = results.length === 0
+          ? '<p style="color:var(--color-text-muted);text-align:center;padding:2rem;">No clashes detected — all clear!</p>'
+          : `<div style="max-height:300px;overflow-y:auto;"><table class="data-table" style="font-size:0.8rem;"><thead><tr><th>Element A</th><th>Element B</th><th>Type</th><th>Volume</th><th>Severity</th></tr></thead><tbody>${results.map(r => `<tr><td title="${r.typeA}">${r.elementA}</td><td title="${r.typeB}">${r.elementB}</td><td>${r.typeA} ↔ ${r.typeB}</td><td>${r.volume} m³</td><td><span class="status-badge ${r.severity==='Critical'?'open':r.severity==='Warning'?'in-progress':'resolved'}">${r.severity}</span></td></tr>`).join('')}</tbody></table></div>`;
+        overlay.innerHTML = `
+          <div class="modal" style="max-width:700px;">
+            <h3><i class="fa-solid fa-triangle-exclamation"></i> Clash Detection Report</h3>
+            <p style="font-size:0.8rem;color:var(--color-text-muted);margin-bottom:1rem;">${results.length} clash(es) found across ${new Set(results.map(r=>r.typeA).concat(results.map(r=>r.typeB))).size} disciplines</p>
+            ${rows}
+            <div class="modal-actions">
+              <button class="btn btn-outline btn-sm" onclick="window.__viewer3d.clearClashDisplay();closeModal();">Clear All</button>
+              <button class="btn btn-ghost btn-sm" onclick="closeModal()">Close</button>
+            </div>
+          </div>`;
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
+        document.body.appendChild(overlay);
+      };
+
+      // BIM element info panel
+      window.addEventListener('elementSelected', (e) => {
+        const info = document.getElementById('liveBimInfo');
+        if (info) {
+          info.innerHTML = `<span style="color:var(--color-accent);font-weight:600;">${e.detail.name}</span><br><span style="font-size:0.75rem;color:var(--color-text-muted);">Type: ${e.detail.type}</span>`;
+          info.style.display = 'block';
+        }
+      });
+      window.addEventListener('elementDeselected', () => {
+        const info = document.getElementById('liveBimInfo');
+        if (info) info.style.display = 'none';
+      });
+
+      // Model stats
+      const statsInterval = setInterval(() => {
+        const statsEl = document.getElementById('modelStats');
+        if (statsEl && viewer.modelGroup.children.length > 0) {
+          const s = viewer.getModelStats();
+          statsEl.innerHTML = `${s.meshes} elements · ${(s.vertices/1000).toFixed(0)}K verts`;
+        }
+      }, 2000);
+
       // Toolbar
       const tb = document.querySelectorAll('.viewer-toolbar .btn-icon');
       function setActive(idx) { tb.forEach((b,i) => b.classList.toggle('active', i===idx)); }
       tb[0]?.addEventListener('click', () => { viewer.setTool('orbit'); setActive(0); });
       tb[1]?.addEventListener('click', () => { viewer.setTool('pan'); setActive(1); });
-      tb[3]?.addEventListener('click', () => { setActive(3); showModal('section-cut-modal'); });
-      tb[4]?.addEventListener('click', () => { setActive(4); });
+      tb[3]?.addEventListener('click', () => { setActive(3); window.showSectionCutModal(); });
+      tb[4]?.addEventListener('click', () => { viewer.setTool('measure'); setActive(4); window.showToast('Measure Tool', 'Click two points on the model to measure distance. Press Esc to cancel.'); });
       tb[5]?.addEventListener('click', () => { setActive(5); viewer.addAnnotation(); });
       tb[7]?.addEventListener('click', () => { canvas.requestFullscreen().catch(()=>{}); });
 
@@ -191,13 +282,20 @@
         if (['top','front','right','3d'].includes(t)) btn.addEventListener('click', () => viewer.setView(t));
       });
 
-      // GLB file upload support
+      // GLB/IFC file upload
       const fi = document.getElementById('fileInput');
-      fi?.addEventListener('change', () => {
+      fi?.addEventListener('change', async () => {
         const f = fi.files[0];
         if (!f) return;
         const ext = '.' + f.name.split('.').pop().toLowerCase();
-        if (ext === '.glb' || ext === '.gltf') {
+        if (ext === '.ifc') {
+          const bimData = await viewer.loadIFC(f);
+          if (bimData) {
+            window.showToast('IFC Loaded', `${bimData.elements.length} BIM elements parsed from ${bimData.fileName}`);
+          } else {
+            window.showToast('IFC Note', 'Geometric parsing unavailable — model displayed in demo mode. Full IFC geometry requires server-side conversion.');
+          }
+        } else if (ext === '.glb' || ext === '.gltf') {
           const url = URL.createObjectURL(f);
           import('three/addons/loaders/GLTFLoader.js').then(m => {
             new m.GLTFLoader().load(url, (gltf) => {
