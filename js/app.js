@@ -72,25 +72,71 @@ function initPage() {
 
 // ================ DASHBOARD ================
 function initDashboard() {
+  // Compute stats from real data
+  const activeProjects = APP_DATA.projects.filter(p => p.status === 'active').length;
+  const totalModels = APP_DATA.projects.reduce((sum, p) => sum + p.models, 0);
+  const totalBudget = APP_DATA.projects.reduce((sum, p) => sum + parseFloat(p.budget.replace(/[₹, Cr]/g, '')) || 0, 0);
+  const openIssues = APP_DATA.tasks.filter(t => t.status === 'open').length;
+
+  const sp = document.getElementById('statProjects');
+  const sb = document.getElementById('statBudget');
+  const sm = document.getElementById('statModels');
+  const si = document.getElementById('statIssues');
+  if (sp) sp.textContent = activeProjects;
+  if (sb) sb.textContent = '₹ ' + Math.round(totalBudget) + 'Cr';
+  if (sm) sm.textContent = totalModels;
+  if (si) si.textContent = openIssues;
+
   // Recent projects list
   const container = document.getElementById('recentProjects');
-  if (!container) return;
+  if (container) {
+    const recentProjects = APP_DATA.projects.filter(p => p.status === 'active').slice(0, 4);
+    container.innerHTML = recentProjects.map(p => `
+      <div class="project-row" onclick="location.href='viewer.html?project=${p.id}'" style="cursor:pointer;">
+        <div class="project-thumb" style="background: ${p.gradient}"><i class="fa-solid ${p.icon}"></i></div>
+        <div class="project-info">
+          <span class="project-name">${p.name}</span>
+          <span class="project-meta">${capitalize(p.type)} · ${p.budget} · ${p.models} models</span>
+        </div>
+        <div class="project-progress">
+          <div class="progress-bar"><div class="progress-fill" style="width:${p.progress}%"></div></div>
+          <span>${p.progress}%</span>
+        </div>
+      </div>
+    `).join('');
+  }
 
-  const recentProjects = APP_DATA.projects.filter(p => p.status === 'active').slice(0, 3);
-  container.innerHTML = recentProjects.map(p => `
-    <div class="project-row" onclick="location.href='viewer.html?project=${p.id}'">
-      <div class="project-thumb" style="background: ${p.gradient}"><i class="fa-solid ${p.icon}"></i></div>
-      <div class="project-info">
-        <span class="project-name">${p.name}</span>
-        <span class="project-meta">${capitalize(p.type)} · ${p.progress}% complete · ${p.models} models</span>
+  // Activity feed
+  const feed = document.getElementById('activityFeed');
+  if (feed) {
+    const colors = { upload: 'accent', resolve: 'green', annotate: 'purple', flag: 'amber', update: 'accent', report: 'green', system: 'accent', clash: 'amber', estimate: 'purple', approve: 'green' };
+    feed.innerHTML = APP_DATA.recentActivity.slice(0, 8).map(a => `
+      <div class="activity-item">
+        <div class="activity-dot ${colors[a.type] || 'accent'}"></div>
+        <div class="activity-body">
+          <span class="activity-text"><strong>${getTeamMember(a.user)?.name || a.user}</strong> ${a.action} — ${a.detail}</span>
+          <span class="activity-time">${a.time}</span>
+        </div>
       </div>
-      <div class="project-progress">
-        <div class="progress-bar"><div class="progress-fill" style="width:${p.progress}%"></div></div>
-        <span>${p.progress}%</span>
+    `).join('');
+  }
+
+  // Type distribution from real data
+  const distEl = document.getElementById('typeDistribution');
+  if (distEl) {
+    const typeColors = { residential: 'var(--color-accent)', infrastructure: '#f97316', healthcare: '#10b981', commercial: '#6366f1', industrial: '#8b5cf6' };
+    const typeLabels = { residential: 'Residential', infrastructure: 'Infrastructure', healthcare: 'Healthcare', commercial: 'Commercial', industrial: 'Industrial' };
+    const typeIcons = { residential: 'fa-house', infrastructure: 'fa-road', healthcare: 'fa-hospital', commercial: 'fa-building', industrial: 'fa-industry' };
+    const counts = {};
+    APP_DATA.projects.forEach(p => { counts[p.type] = (counts[p.type] || 0) + 1; });
+    const max = Math.max(...Object.values(counts), 1);
+    distEl.innerHTML = Object.entries(counts).map(([type, count]) => `
+      <div class="type-bar-group">
+        <div class="type-label"><i class="fa-solid ${typeIcons[type] || 'fa-folder'}"></i> ${typeLabels[type] || type}</div>
+        <div class="type-bar-wrapper"><div class="type-bar" style="width:${(count/max*100)}%; --bar-color: ${typeColors[type] || 'var(--color-accent)'}"><span>${count}</span></div></div>
       </div>
-    </div>
-  `).join('');
-}
+    `).join('');
+  }
 
 // ================ PROJECTS PAGE ================
 function initProjects() {
@@ -137,12 +183,17 @@ function renderProjectCards(grid, projects) {
       <div class="project-card-body">
         <h4>${p.name}</h4>
         <p>${p.client} · ${p.location}</p>
+        <p style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${p.description || ''}</p>
         <div class="project-card-meta">
-          <span>${p.models} models</span>
-          <span>${p.progress}%</span>
+          <span><i class="fa-solid fa-cubes"></i> ${p.models}</span>
+          <span><i class="fa-solid fa-indian-rupee-sign"></i> ${p.budget}</span>
         </div>
         <div class="progress-bar" style="width:100%;margin-top:8px;">
           <div class="progress-fill" style="width:${p.progress}%"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.7rem;color:var(--color-text-muted);margin-top:4px;">
+          <span>${p.progress}% complete</span>
+          <span>${p.models_list ? p.models_list.length : 0} recent uploads</span>
         </div>
       </div>
     </div>
@@ -316,7 +367,7 @@ function initTeam() {
       <div class="member-detail">
         <h4>${m.name}</h4>
         <div class="member-role">${m.role}</div>
-        <div class="member-projects">${m.projects} active projects</div>
+        <div class="member-projects">${m.projects} active projects · ${m.email}</div>
       </div>
       <span class="status-badge ${m.status === 'active' ? 'resolved' : 'closed'}" style="font-size:0.7rem;">
         ${m.status}

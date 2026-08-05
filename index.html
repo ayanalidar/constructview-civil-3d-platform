@@ -107,7 +107,7 @@
               <i class="fa-solid fa-building-columns"></i>
             </div>
             <div class="stat-body">
-              <span class="stat-value">24</span>
+              <span class="stat-value" id="statProjects">0</span>
               <span class="stat-label">Active Projects</span>
             </div>
             <div class="stat-trend up">
@@ -116,10 +116,22 @@
           </div>
           <div class="stat-card">
             <div class="stat-icon" style="--stat-color: #10b981">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+            </div>
+            <div class="stat-body">
+              <span class="stat-value" id="statBudget">₹ 0Cr</span>
+              <span class="stat-label">Total Budget</span>
+            </div>
+            <div class="stat-trend neutral">
+              <i class="fa-solid fa-minus"></i> On Track
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="--stat-color: #6366f1">
               <i class="fa-solid fa-cubes"></i>
             </div>
             <div class="stat-body">
-              <span class="stat-value">156</span>
+              <span class="stat-value" id="statModels">0</span>
               <span class="stat-label">3D Models</span>
             </div>
             <div class="stat-trend up">
@@ -127,23 +139,11 @@
             </div>
           </div>
           <div class="stat-card">
-            <div class="stat-icon" style="--stat-color: #6366f1">
-              <i class="fa-solid fa-users-gear"></i>
-            </div>
-            <div class="stat-body">
-              <span class="stat-value">42</span>
-              <span class="stat-label">Team Members</span>
-            </div>
-            <div class="stat-trend neutral">
-              <i class="fa-solid fa-minus"></i> Same
-            </div>
-          </div>
-          <div class="stat-card">
             <div class="stat-icon" style="--stat-color: #f59e0b">
               <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <div class="stat-body">
-              <span class="stat-value">7</span>
+              <span class="stat-value" id="statIssues">0</span>
               <span class="stat-label">Open Issues</span>
             </div>
             <div class="stat-trend down">
@@ -247,27 +247,8 @@
           <div class="card-header">
             <h3>Project Distribution</h3>
           </div>
-          <div class="type-distribution">
-            <div class="type-bar-group">
-              <div class="type-label">Residential</div>
-              <div class="type-bar-wrapper"><div class="type-bar" style="width:40%; --bar-color: var(--color-accent)"><span>10</span></div></div>
-            </div>
-            <div class="type-bar-group">
-              <div class="type-label">Infrastructure</div>
-              <div class="type-bar-wrapper"><div class="type-bar" style="width:24%; --bar-color: #f97316"><span>6</span></div></div>
-            </div>
-            <div class="type-bar-group">
-              <div class="type-label">Healthcare</div>
-              <div class="type-bar-wrapper"><div class="type-bar" style="width:16%; --bar-color: #10b981"><span>4</span></div></div>
-            </div>
-            <div class="type-bar-group">
-              <div class="type-label">Commercial</div>
-              <div class="type-bar-wrapper"><div class="type-bar" style="width:12%; --bar-color: #6366f1"><span>3</span></div></div>
-            </div>
-            <div class="type-bar-group">
-              <div class="type-label">Industrial</div>
-              <div class="type-bar-wrapper"><div class="type-bar" style="width:8%; --bar-color: #8b5cf6"><span>1</span></div></div>
-            </div>
+          <div class="type-distribution" id="typeDistribution">
+            <!-- Rendered by JS -->
           </div>
         </div>
       </div>
