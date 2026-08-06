@@ -137,6 +137,7 @@ function initDashboard() {
       </div>
     `).join('');
   }
+}
 
 // ================ PROJECTS PAGE ================
 function initProjects() {
