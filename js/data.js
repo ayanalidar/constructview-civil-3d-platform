@@ -279,6 +279,57 @@ const APP_DATA = {
     { id: 'n3', text: 'Client Godrej Properties viewed Township model', time: '3 hours ago', unread: true },
     { id: 'n4', text: 'Monthly report for Skyline Residences is ready', time: 'Yesterday', unread: false },
   ],
+
+  // Case studies for marketing site
+  caseStudies: [
+    { id: 'cs1', title: 'How Patel Infra Cut Rework by 40%', subtitle: 'Hospital project saved \u20b91.2 Cr through early clash detection', problem: 'Patel Infra was building a 300-bed hospital in Pune. MEP coordination was being done with 2D drawings, and clashes were discovered on-site, causing expensive rework and 3-month delays.', solution: 'Migrated all hospital models to ConstructView. Ran automated clash detection across Architecture, Structure, and MEP disciplines. Found 47 clashes in the first scan.', results: [{ label: 'Rework Reduction', value: '40%' },{ label: 'Cost Saved', value: '\u20b91.2 Cr' },{ label: 'Schedule Saved', value: '11 weeks' },{ label: 'Clashes Found', value: '47' }], quote: 'ConstructView caught a plumbing riser running through a structural column that would have cost us \u20b928 lakhs to fix. Now we run clash detection before every pour.', author: 'Meera Patel, Chief Engineer' },
+    { id: 'cs2', title: 'NHAI Accelerates Approvals by 3x', subtitle: 'Expressway stakeholders moved from 2D PDFs to interactive 3D', problem: 'NHAI project had 12 stakeholder agencies reviewing designs via PDF drawings. Each review cycle took 3-4 weeks. Miscommunication led to 23 change orders in the first year.', solution: 'Deployed ConstructView as the single source of truth. All stakeholders accessed the same 3D model with role-based permissions. Section cuts replaced PDF sections. Annotations replaced email chains.', results: [{ label: 'Faster Approvals', value: '3x' },{ label: 'Change Orders', value: '-65%' },{ label: 'Review Cycle', value: '8 days' },{ label: 'Stakeholders', value: '12' }], quote: 'What used to take 3 weeks of email threads now happens in a single viewing session. The client walks through the bridge model in 3D and approves on the spot.', author: 'Tom Wilson, Civil Engineer' },
+    { id: 'cs3', title: 'BuildTech Wins 4 New Clients Through White-Label', subtitle: 'Consultancy monetised BIM expertise by offering branded 3D portals', problem: 'BuildTech was losing post-design clients because they had no way to present 3D models professionally. Clients would take the BIM model and go to cheaper vendors for construction.', solution: 'White-labeled ConstructView for 4 contractor clients. Each client got their own branded portal with custom domain, logo, and color theme. BuildTech charged \u20b945k/month per client for managed access.', results: [{ label: 'New Revenue', value: '\u20b921.6L/yr' },{ label: 'Client Retention', value: '+80%' },{ label: 'White-Label Clients', value: '4' },{ label: 'Setup Time', value: '2 days' }], quote: 'Our clients think we built them a custom platform worth \u20b915 lakhs. We set it up in 2 days.', author: 'Arun Sharma, CEO, BuildTech Solutions' }
+  ],
+
+  // Competitive comparison
+  competitors: [
+    { feature: '3D Viewer (no install)', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: 'White-Label Branding', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+    { feature: 'Clash Detection', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Section Clipping', cv: true, autodesk: true, trimble: true, dalux: false, bimCollab: true },
+    { feature: 'On-Model Measurement', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: 'Multi-Discipline Support', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Role-Based Access', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Custom Domain', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+    { feature: 'Mobile Responsive', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: 'IFC/GLB/DWG Support', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'API Access', cv: true, autodesk: true, trimble: true, dalux: false, bimCollab: true },
+    { feature: 'Per-Project Pricing', cv: true, autodesk: false, trimble: false, dalux: true, bimCollab: false }
+  ],
+
+  // FAQ
+  faqs: [
+    { q: 'What file formats does ConstructView support?', a: 'We support IFC (BIM), Revit (RVT), AutoCAD (DWG), SketchUp (SKP), GLB/glTF, OBJ, FBX, and STEP. Upload any of these formats and view them instantly in 3D without any software installation.' },
+    { q: 'Can I white-label the platform for my clients?', a: 'Absolutely. From the Settings panel you can change the platform name, upload your logo, set a custom domain, pick from 8 color presets, rename user roles, and configure watermarking.' },
+    { q: 'Do my clients need to install any software?', a: 'No. ConstructView runs entirely in the browser using WebGL. Your clients just open a link. No plugins, no downloads, no training required.' },
+    { q: 'How does clash detection work?', a: 'Our clash detection engine compares every 3D element across different disciplines using bounding-box intersection. Results are graded Critical, Warning, or Minor and displayed as pulsing markers on the model.' },
+    { q: 'Is my project data secure?', a: 'Yes. All files are encrypted at rest and in transit. You control access through role-based permissions. Enterprise customers can opt for on-premise deployment.' },
+    { q: 'Can I measure distances on the 3D model?', a: 'Yes. Click the Measure tool, then click any two points. You get a live preview line and a permanent distance label in meters.' },
+    { q: 'How does multi-tenant white-label work?', a: 'The Enterprise plan supports multi-tenant white-label. Each client gets their own branded portal with custom domain, logo, and colors under your main account.' },
+    { q: 'What is the difference between section cuts and X-ray mode?', a: 'Section cuts create a real clipping plane through your model. X-ray mode makes all materials semi-transparent so you can see through walls while keeping the full model visible.' },
+    { q: 'Can I export screenshots or reports?', a: 'Yes. Export high-res screenshots (PNG), PDF reports with clash summaries, and the model as GLB. All exports can include your watermark.' },
+    { q: 'Is there an API for integration?', a: 'Yes. Enterprise customers get full API access for programmatic model upload, project management, and data extraction.' }
+  ],
+
+  // Partners / Integrations
+  partners: [
+    { name: 'Autodesk' }, { name: 'Trimble' }, { name: 'SketchUp' }, { name: 'Rhino 3D' },
+    { name: 'Revit' }, { name: 'Navisworks' }, { name: 'Tekla' }, { name: 'ArchiCAD' }
+  ],
+
+  // Blog / Resources preview
+  blogPosts: [
+    { title: 'Getting Started with BIM Clash Detection', date: '2026-07-28', readTime: '8 min', tag: 'Guide', excerpt: 'Learn how to set up your first clash detection run, interpret results, and build a coordination workflow.' },
+    { title: '5 Ways 3D Visualization Wins Client Approvals Faster', date: '2026-07-20', readTime: '6 min', tag: 'Business', excerpt: 'How civil firms are cutting approval cycles from weeks to days using browser-based 3D.' },
+    { title: 'IFC vs DWG vs RVT: Which Format Should You Use?', date: '2026-07-12', readTime: '5 min', tag: 'Technical', excerpt: 'A comparison of the three most common BIM/CAD formats and how to avoid conversion headaches.' },
+    { title: 'White-Label BIM Portals: A New Revenue Stream', date: '2026-07-05', readTime: '7 min', tag: 'Business', excerpt: 'How engineering consultancies are turning BIM expertise into recurring revenue via branded portals.' }
+  ]
 };
 
 // Helper: format date
