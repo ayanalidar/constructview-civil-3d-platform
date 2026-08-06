@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="default">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building Designer — ConstructView</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/designer.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand"><div class="brand-icon"><svg viewBox="0 0 40 40" fill="none"><rect x="2" y="20" width="8" height="18" rx="1" fill="currentColor"/><rect x="13" y="10" width="8" height="28" rx="1" fill="currentColor"/><rect x="24" y="14" width="8" height="24" rx="1" fill="currentColor" opacity="0.6"/><rect x="2" y="16" width="30" height="3" rx="1" fill="var(--color-accent)"/></svg></div><span class="brand-name" id="brandName">ConstructView</span></div>
+      <nav class="sidebar-nav">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-grid-2"></i><span>Dashboard</span></a>
+        <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-tree"></i><span>Projects</span></a>
+        <a href="designer.html" class="nav-item active"><i class="fa-solid fa-pen-ruler"></i><span>Designer</span></a>
+        <a href="viewer.html" class="nav-item"><i class="fa-solid fa-cube"></i><span>3D Viewer</span></a>
+        <a href="tasks.html" class="nav-item"><i class="fa-solid fa-list-check"></i><span>Tasks</span></a>
+        <a href="team.html" class="nav-item"><i class="fa-solid fa-users"></i><span>Team</span></a>
+        <a href="settings.html" class="nav-item"><i class="fa-solid fa-sliders"></i><span>Settings</span></a>
+      </nav>
+      <div class="sidebar-footer"><div class="user-badge"><div class="avatar">AJ</div><div class="user-info"><span class="user-name">Alex Johnson</span><span class="user-role">Project Manager</span></div></div></div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="topbar-left"><button class="btn-icon" id="sidebarToggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb"><span>Building Designer</span></div></div>
+        <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" onclick="window.__designer?.resetDefault()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('top')"><i class="fa-solid fa-arrow-down"></i> Top</button>
+          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('front')"><i class="fa-solid fa-arrow-up"></i> Front</button>
+          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('3d')"><i class="fa-solid fa-cube"></i> 3D</button>
+          <button class="btn btn-accent btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save Design</button>
+        </div>
+      </header>
+
+      <div class="page-content" style="padding:0;height:calc(100vh - 60px);overflow:hidden;">
+        <div class="designer-layout">
+          <!-- Left: Parameter Panel -->
+          <div class="designer-panel" id="designerPanel">
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-building"></i> Building Dimensions</h4>
+              <div class="param-group">
+                <label>Floors <span id="floorsVal">3</span></label>
+                <input type="range" min="1" max="8" value="3" id="paramFloors">
+              </div>
+              <div class="param-row">
+                <div class="param-group"><label>Width <span id="widthVal">10</span>m</label><input type="range" min="6" max="20" value="10" step="1" id="paramWidth"></div>
+                <div class="param-group"><label>Depth <span id="depthVal">8</span>m</label><input type="range" min="6" max="16" value="8" step="1" id="paramDepth"></div>
+              </div>
+              <div class="param-group">
+                <label>Floor Height <span id="fhVal">3.2</span>m</label>
+                <input type="range" min="2.8" max="4.5" value="3.2" step="0.2" id="paramFloorHeight">
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-house"></i> Roof</h4>
+              <div class="param-group">
+                <label>Roof Type</label>
+                <div class="chip-row" id="roofTypeChips">
+                  <button class="chip active" data-val="gable">Gable</button>
+                  <button class="chip" data-val="flat">Flat</button>
+                  <button class="chip" data-val="hip">Hip</button>
+                  <button class="chip" data-val="dome">Dome</button>
+                </div>
+              </div>
+              <div class="param-group">
+                <label>Roof Color</label>
+                <input type="color" value="#5c4033" id="paramRoofColor">
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-paint-roller"></i> Materials</h4>
+              <div class="param-group"><label>Wall Color</label><input type="color" value="#e8e0d8" id="paramWallColor"></div>
+              <div class="param-group"><label>Glass Color</label><input type="color" value="#87ceeb" id="paramGlassColor"></div>
+            </div>
+
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-border-all"></i> Windows</h4>
+              <div class="param-group">
+                <label>Style</label>
+                <div class="chip-row" id="windowStyleChips">
+                  <button class="chip active" data-val="grid">Grid</button>
+                  <button class="chip" data-val="horizontal">Horizontal</button>
+                  <button class="chip" data-val="full">Full Glass</button>
+                </div>
+              </div>
+              <div class="param-group" id="windowCountGroup">
+                <label>Windows Per Side <span id="winCountVal">3</span></label>
+                <input type="range" min="2" max="6" value="3" id="paramWindowCount">
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-toggle-on"></i> Features</h4>
+              <div class="toggle-row"><label>Foundation</label><button class="toggle active" data-param="hasFoundation" id="togFoundation">ON</button></div>
+              <div class="toggle-row"><label>Entrance</label><button class="toggle active" data-param="hasEntrance" id="togEntrance">ON</button></div>
+              <div class="toggle-row"><label>Balcony</label><button class="toggle active" data-param="hasBalcony" id="togBalcony">ON</button></div>
+              <div class="toggle-row"><label>Show MEP</label><button class="toggle" data-param="hasMEP" id="togMEP">OFF</button></div>
+            </div>
+
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-tree"></i> Surrounding</h4>
+              <div class="chip-row" id="surroundingChips">
+                <button class="chip active" data-val="none">None</button>
+                <button class="chip" data-val="garden">Garden</button>
+                <button class="chip" data-val="urban">Urban</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: 3D Canvas -->
+          <div class="designer-canvas" id="designerCanvas">
+            <div class="viewer-toolbar" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);">
+              <button class="btn-icon active" onclick="window.__designer?.setView('3d')" title="Orbit"><i class="fa-solid fa-arrows-spin"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.setView('front')" title="Front"><i class="fa-solid fa-arrow-up"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.setView('top')" title="Top"><i class="fa-solid fa-arrow-down"></i></button>
+              <div style="width:1px;background:var(--color-border);margin:2px 4px;"></div>
+              <button class="btn-icon" onclick="window.__designer?.toggleWireframe()" title="Wireframe"><i class="fa-solid fa-border-all"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.resetView()" title="Reset"><i class="fa-solid fa-house"></i></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Building stats bar -->
+        <div class="designer-stats" id="designerStats">
+          <span><i class="fa-solid fa-ruler"></i> Total Height: <strong id="statHeight">9.6</strong>m</span>
+          <span><i class="fa-solid fa-maximize"></i> Area: <strong id="statArea">80</strong> m²/floor</span>
+          <span><i class="fa-solid fa-building"></i> Floors: <strong id="statFloors">3</strong></span>
+          <span><i class="fa-solid fa-cube"></i> Volume: ~<strong id="statVolume">768</strong> m³</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+  <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
+  <script type="module">
+    import { BuildingDesigner } from './js/designer3d.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      applyBrandColors();
+      initSidebar();
+
+      const canvas = document.getElementById('designerCanvas');
+      if (!canvas) return;
+
+      const designer = new BuildingDesigner(canvas);
+      window.__designer = designer;
+
+      // Stats update
+      function updateStats() {
+        const p = designer.params;
+        const h = p.floors * p.floorHeight;
+        document.getElementById('statHeight').textContent = h.toFixed(1);
+        document.getElementById('statArea').textContent = Math.round(p.width * p.depth);
+        document.getElementById('statFloors').textContent = p.floors;
+        document.getElementById('statVolume').textContent = Math.round(p.width * p.depth * h);
+      }
+
+      // Sliders
+      function bindSlider(id, param, valEl, suffix) {
+        const el = document.getElementById(id);
+        el.addEventListener('input', () => {
+          const v = parseFloat(el.value);
+          designer.updateParam(param, v);
+          if (valEl) document.getElementById(valEl).textContent = v;
+          updateStats();
+        });
+      }
+
+      bindSlider('paramFloors', 'floors', 'floorsVal');
+      bindSlider('paramWidth', 'width', 'widthVal');
+      bindSlider('paramDepth', 'depth', 'depthVal');
+      bindSlider('paramFloorHeight', 'floorHeight', 'fhVal');
+      bindSlider('paramWindowCount', 'windowCount', 'winCountVal');
+
+      // Color inputs
+      document.getElementById('paramRoofColor').addEventListener('input', (e) => designer.updateParam('roofColor', e.target.value));
+      document.getElementById('paramWallColor').addEventListener('input', (e) => designer.updateParam('wallColor', e.target.value));
+      document.getElementById('paramGlassColor').addEventListener('input', (e) => designer.updateParam('glassColor', e.target.value));
+
+      // Chip groups
+      document.querySelectorAll('.chip-row').forEach(row => {
+        row.querySelectorAll('.chip').forEach(chip => {
+          chip.addEventListener('click', () => {
+            row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            const param = row.id === 'roofTypeChips' ? 'roofType'
+              : row.id === 'windowStyleChips' ? 'windowStyle'
+              : row.id === 'surroundingChips' ? 'surrounding' : null;
+            if (param) {
+              designer.updateParam(param, chip.dataset.val);
+              // Hide window count for full glass
+              if (param === 'windowStyle') {
+                document.getElementById('windowCountGroup').style.display = chip.dataset.val === 'full' ? 'none' : 'block';
+              }
+            }
+          });
+        });
+      });
+
+      // Toggle buttons
+      document.querySelectorAll('.toggle-row .toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const param = btn.dataset.param;
+          const current = designer.params[param];
+          designer.updateParam(param, !current);
+          btn.textContent = !current ? 'ON' : 'OFF';
+          btn.classList.toggle('active', !current);
+          updateStats();
+        });
+      });
+
+      updateStats();
+    });
+  </script>
+</body>
+</html>
