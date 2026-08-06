@@ -28,112 +28,140 @@
 
     <main class="main-content">
       <header class="topbar">
-        <div class="topbar-left"><button class="btn-icon" id="sidebarToggle" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb"><span>Building Designer</span></div></div>
+        <div class="topbar-left"><button class="btn-icon" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb"><span>Building Designer</span></div></div>
         <div class="topbar-right">
+          <button class="btn btn-outline btn-sm" id="btnPlanView"><i class="fa-solid fa-map"></i> Plan View</button>
           <button class="btn btn-outline btn-sm" onclick="window.__designer?.resetDefault()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
-          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('top')"><i class="fa-solid fa-arrow-down"></i> Top</button>
-          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('front')"><i class="fa-solid fa-arrow-up"></i> Front</button>
-          <button class="btn btn-outline btn-sm" onclick="window.__designer?.setView('3d')"><i class="fa-solid fa-cube"></i> 3D</button>
-          <button class="btn btn-accent btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save Design</button>
+          <button class="btn btn-accent btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         </div>
       </header>
 
       <div class="page-content" style="padding:0;height:calc(100vh - 60px);overflow:hidden;">
         <div class="designer-layout">
-          <!-- Left: Parameter Panel -->
+          <!-- Parameter Panel -->
           <div class="designer-panel" id="designerPanel">
+            <!-- Shape -->
             <div class="panel-section">
-              <h4><i class="fa-solid fa-building"></i> Building Dimensions</h4>
-              <div class="param-group">
-                <label>Floors <span id="floorsVal">3</span></label>
-                <input type="range" min="1" max="8" value="3" id="paramFloors">
-              </div>
-              <div class="param-row">
-                <div class="param-group"><label>Width <span id="widthVal">10</span>m</label><input type="range" min="6" max="20" value="10" step="1" id="paramWidth"></div>
-                <div class="param-group"><label>Depth <span id="depthVal">8</span>m</label><input type="range" min="6" max="16" value="8" step="1" id="paramDepth"></div>
-              </div>
-              <div class="param-group">
-                <label>Floor Height <span id="fhVal">3.2</span>m</label>
-                <input type="range" min="2.8" max="4.5" value="3.2" step="0.2" id="paramFloorHeight">
+              <h4><i class="fa-solid fa-shapes"></i> Building Shape</h4>
+              <div class="chip-row" id="shapeChips">
+                <button class="chip active" data-val="rectangular"><i class="fa-solid fa-square"></i></button>
+                <button class="chip" data-val="lshape"><i class="fa-solid fa-arrow-trend-up"></i></button>
+                <button class="chip" data-val="ushape"><i class="fa-solid fa-vector-square"></i></button>
+                <button class="chip" data-val="tshape"><i class="fa-solid fa-grip-lines"></i></button>
+                <button class="chip" data-val="courtyard"><i class="fa-solid fa-border-all"></i></button>
               </div>
             </div>
 
+            <!-- Dimensions -->
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-building"></i> Dimensions</h4>
+              <div class="param-group"><label>Floors <span id="floorsVal">3</span></label><input type="range" min="1" max="8" value="3" id="paramFloors"></div>
+              <div class="param-row"><div class="param-group"><label>Width <span id="widthVal">10</span></label><input type="range" min="6" max="24" value="10" step="1" id="paramWidth"></div><div class="param-group"><label>Depth <span id="depthVal">8</span></label><input type="range" min="6" max="18" value="8" step="1" id="paramDepth"></div></div>
+              <div class="param-group"><label>Floor Height <span id="fhVal">3.2</span>m</label><input type="range" min="2.6" max="4.5" value="3.2" step="0.2" id="paramFloorHeight"></div>
+            </div>
+
+            <!-- Material Presets -->
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-swatchbook"></i> Material Presets</h4>
+              <div class="preset-grid" id="materialPresets">
+                <button class="preset-chip active" data-preset="classic" style="--p-wall:#e8dcc8;--p-glass:#87ceeb;--p-roof:#5c4033">Classic</button>
+                <button class="preset-chip" data-preset="modern" style="--p-wall:#f5f0e8;--p-glass:#a8d8ea;--p-roof:#3d3d3d">Modern</button>
+                <button class="preset-chip" data-preset="industrial" style="--p-wall:#b0b0b0;--p-glass:#c8dce8;--p-roof:#4a4a4a">Industrial</button>
+                <button class="preset-chip" data-preset="coastal" style="--p-wall:#e8f0f8;--p-glass:#b8ddf0;--p-roof:#8bb8d0">Coastal</button>
+                <button class="preset-chip" data-preset="terracotta" style="--p-wall:#d4956a;--p-glass:#87ceeb;--p-roof:#8b4513">Terra</button>
+                <button class="preset-chip" data-preset="glasshouse" style="--p-wall:#e8e8e8;--p-glass:#c8e8ff;--p-roof:#555555">Glass</button>
+              </div>
+            </div>
+
+            <!-- Roof -->
             <div class="panel-section">
               <h4><i class="fa-solid fa-house"></i> Roof</h4>
-              <div class="param-group">
-                <label>Roof Type</label>
-                <div class="chip-row" id="roofTypeChips">
-                  <button class="chip active" data-val="gable">Gable</button>
-                  <button class="chip" data-val="flat">Flat</button>
-                  <button class="chip" data-val="hip">Hip</button>
-                  <button class="chip" data-val="dome">Dome</button>
-                </div>
+              <div class="chip-row" id="roofChips">
+                <button class="chip active" data-val="gable">Gable</button>
+                <button class="chip" data-val="flat">Flat</button>
+                <button class="chip" data-val="hip">Hip</button>
+                <button class="chip" data-val="dome">Dome</button>
+                <button class="chip" data-val="butterfly">Butterfly</button>
               </div>
-              <div class="param-group">
-                <label>Roof Color</label>
-                <input type="color" value="#5c4033" id="paramRoofColor">
-              </div>
+              <div class="param-group"><label>Roof Color</label><input type="color" value="#5c4033" id="paramRoofColor"></div>
             </div>
 
+            <!-- Materials -->
             <div class="panel-section">
-              <h4><i class="fa-solid fa-paint-roller"></i> Materials</h4>
-              <div class="param-group"><label>Wall Color</label><input type="color" value="#e8e0d8" id="paramWallColor"></div>
-              <div class="param-group"><label>Glass Color</label><input type="color" value="#87ceeb" id="paramGlassColor"></div>
+              <h4><i class="fa-solid fa-palette"></i> Materials</h4>
+              <div class="param-row"><div class="param-group"><label>Wall</label><input type="color" value="#e8e0d8" id="paramWallColor"></div><div class="param-group"><label>Glass</label><input type="color" value="#87ceeb" id="paramGlassColor"></div></div>
             </div>
 
+            <!-- Windows -->
             <div class="panel-section">
               <h4><i class="fa-solid fa-border-all"></i> Windows</h4>
-              <div class="param-group">
-                <label>Style</label>
-                <div class="chip-row" id="windowStyleChips">
-                  <button class="chip active" data-val="grid">Grid</button>
-                  <button class="chip" data-val="horizontal">Horizontal</button>
-                  <button class="chip" data-val="full">Full Glass</button>
-                </div>
+              <div class="chip-row" id="windowChips">
+                <button class="chip active" data-val="grid">Grid</button>
+                <button class="chip" data-val="horizontal">Horizontal</button>
+                <button class="chip" data-val="full">Full Glass</button>
               </div>
-              <div class="param-group" id="windowCountGroup">
-                <label>Windows Per Side <span id="winCountVal">3</span></label>
-                <input type="range" min="2" max="6" value="3" id="paramWindowCount">
-              </div>
+              <div class="param-group" id="winCountGrp"><label>Per Side <span id="winCountVal">3</span></label><input type="range" min="2" max="6" value="3" id="paramWindowCount"></div>
             </div>
 
+            <!-- Placement Tools -->
             <div class="panel-section">
-              <h4><i class="fa-solid fa-toggle-on"></i> Features</h4>
-              <div class="toggle-row"><label>Foundation</label><button class="toggle active" data-param="hasFoundation" id="togFoundation">ON</button></div>
-              <div class="toggle-row"><label>Entrance</label><button class="toggle active" data-param="hasEntrance" id="togEntrance">ON</button></div>
-              <div class="toggle-row"><label>Balcony</label><button class="toggle active" data-param="hasBalcony" id="togBalcony">ON</button></div>
-              <div class="toggle-row"><label>Show MEP</label><button class="toggle" data-param="hasMEP" id="togMEP">OFF</button></div>
+              <h4><i class="fa-solid fa-hammer"></i> Place Components</h4>
+              <p style="font-size:0.7rem;color:var(--color-text-muted);margin-bottom:0.5rem;">Click on the ground in 3D view to place</p>
+              <div class="chip-row" id="placementChips">
+                <button class="chip" data-mode="wall"><i class="fa-solid fa-grip-lines"></i> Wall</button>
+                <button class="chip" data-mode="column"><i class="fa-solid fa-grip-lines-vertical"></i> Column</button>
+                <button class="chip" data-mode="staircase"><i class="fa-solid fa-stairs"></i> Stairs</button>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="window.__designer?.clearComponents()" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear Placed</button>
             </div>
 
+            <!-- Features -->
+            <div class="panel-section">
+              <h4><i class="fa-solid fa-toggle-on"></i> Add-Ons</h4>
+              <div class="toggle-row"><label><i class="fa-solid fa-arrow-down-to-ground"></i> Foundation</label><button class="toggle active" id="togFoundation">ON</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-door-open"></i> Entrance</label><button class="toggle active" id="togEntrance">ON</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-umbrella-beach"></i> Balcony</label><button class="toggle active" id="togBalcony">ON</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-house-chimney"></i> Porch</label><button class="toggle" id="togPorch">OFF</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-warehouse"></i> Garage</label><button class="toggle" id="togGarage">OFF</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-leaf"></i> Rooftop Terrace</label><button class="toggle" id="togTerrace">OFF</button></div>
+              <div class="toggle-row"><label><i class="fa-solid fa-wrench"></i> Show MEP</label><button class="toggle" id="togMEP">OFF</button></div>
+            </div>
+
+            <!-- Surrounding -->
             <div class="panel-section">
               <h4><i class="fa-solid fa-tree"></i> Surrounding</h4>
               <div class="chip-row" id="surroundingChips">
                 <button class="chip active" data-val="none">None</button>
                 <button class="chip" data-val="garden">Garden</button>
-                <button class="chip" data-val="urban">Urban</button>
               </div>
             </div>
           </div>
 
-          <!-- Right: 3D Canvas -->
+          <!-- 3D Canvas -->
           <div class="designer-canvas" id="designerCanvas">
+            <div class="designer-overlay" id="placementHint" style="display:none;">
+              <p>Click on the ground to place <strong id="placementHintText">wall</strong></p>
+            </div>
             <div class="viewer-toolbar" style="position:absolute;bottom:16px;left:50%;transform:translateX(-50%);">
-              <button class="btn-icon active" onclick="window.__designer?.setView('3d')" title="Orbit"><i class="fa-solid fa-arrows-spin"></i></button>
-              <button class="btn-icon" onclick="window.__designer?.setView('front')" title="Front"><i class="fa-solid fa-arrow-up"></i></button>
-              <button class="btn-icon" onclick="window.__designer?.setView('top')" title="Top"><i class="fa-solid fa-arrow-down"></i></button>
+              <button class="btn-icon active" onclick="window.__designer?.setView('3d')"><i class="fa-solid fa-arrows-spin"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.setView('front')"><i class="fa-solid fa-arrow-up"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.setView('top')"><i class="fa-solid fa-arrow-down"></i></button>
               <div style="width:1px;background:var(--color-border);margin:2px 4px;"></div>
-              <button class="btn-icon" onclick="window.__designer?.toggleWireframe()" title="Wireframe"><i class="fa-solid fa-border-all"></i></button>
-              <button class="btn-icon" onclick="window.__designer?.resetView()" title="Reset"><i class="fa-solid fa-house"></i></button>
+              <button class="btn-icon" id="btnWireframe"><i class="fa-solid fa-border-all"></i></button>
+              <button class="btn-icon" onclick="window.__designer?.resetView()"><i class="fa-solid fa-house"></i></button>
             </div>
           </div>
         </div>
 
-        <!-- Building stats bar -->
-        <div class="designer-stats" id="designerStats">
-          <span><i class="fa-solid fa-ruler"></i> Total Height: <strong id="statHeight">9.6</strong>m</span>
-          <span><i class="fa-solid fa-maximize"></i> Area: <strong id="statArea">80</strong> m²/floor</span>
-          <span><i class="fa-solid fa-building"></i> Floors: <strong id="statFloors">3</strong></span>
-          <span><i class="fa-solid fa-cube"></i> Volume: ~<strong id="statVolume">768</strong> m³</span>
+        <!-- Stats bar -->
+        <div class="designer-stats">
+          <span><i class="fa-solid fa-ruler"></i> Height: <strong id="statHeight">9.6</strong>m</span>
+          <span><i class="fa-solid fa-maximize"></i> Area: <strong id="statArea">80</strong> m²</span>
+          <span><i class="fa-solid fa-layer-group"></i> Floors: <strong id="statFloors">3</strong></span>
+          <span><i class="fa-solid fa-cube"></i> Volume: <strong id="statVolume">768</strong> m³</span>
+          <span><i class="fa-solid fa-shapes"></i> Shape: <strong id="statShape">Rectangular</strong></span>
+          <span><i class="fa-solid fa-paint-roller"></i> Style: <strong id="statStyle">Classic</strong></span>
+          <span id="statComponents" style="display:none;"><i class="fa-solid fa-screwdriver-wrench"></i> <strong>0</strong> placed</span>
         </div>
       </div>
     </main>
@@ -143,81 +171,96 @@
   <script src="js/app.js"></script>
   <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
   <script type="module">
-    import { BuildingDesigner } from './js/designer3d.js';
+    import { BuildingDesigner, MATERIAL_PRESETS } from './js/designer3d.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       applyBrandColors();
       initSidebar();
-
       const canvas = document.getElementById('designerCanvas');
       if (!canvas) return;
-
       const designer = new BuildingDesigner(canvas);
       window.__designer = designer;
 
-      // Stats update
       function updateStats() {
-        const p = designer.params;
-        const h = p.floors * p.floorHeight;
-        document.getElementById('statHeight').textContent = h.toFixed(1);
-        document.getElementById('statArea').textContent = Math.round(p.width * p.depth);
-        document.getElementById('statFloors').textContent = p.floors;
-        document.getElementById('statVolume').textContent = Math.round(p.width * p.depth * h);
+        const s = designer.getStats();
+        document.getElementById('statHeight').textContent = s.height.toFixed(1);
+        document.getElementById('statArea').textContent = Math.round(s.area);
+        document.getElementById('statFloors').textContent = s.floors;
+        document.getElementById('statVolume').textContent = s.volume;
+        document.getElementById('statShape').textContent = designer.params.shape.charAt(0).toUpperCase() + designer.params.shape.slice(1);
+        const preset = MATERIAL_PRESETS[designer.params.materialPreset];
+        document.getElementById('statStyle').textContent = preset ? preset.name : 'Custom';
+        const placed = designer.interiorWalls.length + designer.placedComponents.length;
+        const cs = document.getElementById('statComponents');
+        if (placed > 0) { cs.style.display = 'flex'; cs.querySelector('strong').textContent = placed; }
+        else cs.style.display = 'none';
       }
 
       // Sliders
-      function bindSlider(id, param, valEl, suffix) {
+      function b(id, param, valEl) {
         const el = document.getElementById(id);
-        el.addEventListener('input', () => {
-          const v = parseFloat(el.value);
-          designer.updateParam(param, v);
-          if (valEl) document.getElementById(valEl).textContent = v;
-          updateStats();
-        });
+        el.addEventListener('input', () => { const v = parseFloat(el.value); designer.updateParam(param, v); if (valEl) document.getElementById(valEl).textContent = v; updateStats(); });
       }
+      b('paramFloors', 'floors', 'floorsVal');
+      b('paramWidth', 'width', 'widthVal');
+      b('paramDepth', 'depth', 'depthVal');
+      b('paramFloorHeight', 'floorHeight', 'fhVal');
+      b('paramWindowCount', 'windowCount', 'winCountVal');
 
-      bindSlider('paramFloors', 'floors', 'floorsVal');
-      bindSlider('paramWidth', 'width', 'widthVal');
-      bindSlider('paramDepth', 'depth', 'depthVal');
-      bindSlider('paramFloorHeight', 'floorHeight', 'fhVal');
-      bindSlider('paramWindowCount', 'windowCount', 'winCountVal');
+      // Colors
+      document.getElementById('paramRoofColor').addEventListener('input', e => { designer.updateParam('roofColor', e.target.value); updateStats(); });
+      document.getElementById('paramWallColor').addEventListener('input', e => { designer.updateParam('wallColor', e.target.value); updateStats(); });
+      document.getElementById('paramGlassColor').addEventListener('input', e => { designer.updateParam('glassColor', e.target.value); updateStats(); });
 
-      // Color inputs
-      document.getElementById('paramRoofColor').addEventListener('input', (e) => designer.updateParam('roofColor', e.target.value));
-      document.getElementById('paramWallColor').addEventListener('input', (e) => designer.updateParam('wallColor', e.target.value));
-      document.getElementById('paramGlassColor').addEventListener('input', (e) => designer.updateParam('glassColor', e.target.value));
+      // Shape chips
+      document.querySelectorAll('#shapeChips .chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('#shapeChips .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); designer.updateParam('shape', c.dataset.val); updateStats(); }));
 
-      // Chip groups
-      document.querySelectorAll('.chip-row').forEach(row => {
-        row.querySelectorAll('.chip').forEach(chip => {
-          chip.addEventListener('click', () => {
-            row.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-            chip.classList.add('active');
-            const param = row.id === 'roofTypeChips' ? 'roofType'
-              : row.id === 'windowStyleChips' ? 'windowStyle'
-              : row.id === 'surroundingChips' ? 'surrounding' : null;
-            if (param) {
-              designer.updateParam(param, chip.dataset.val);
-              // Hide window count for full glass
-              if (param === 'windowStyle') {
-                document.getElementById('windowCountGroup').style.display = chip.dataset.val === 'full' ? 'none' : 'block';
-              }
-            }
-          });
-        });
+      // Roof chips
+      document.querySelectorAll('#roofChips .chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('#roofChips .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); designer.updateParam('roofType', c.dataset.val); updateStats(); }));
+
+      // Window chips
+      document.querySelectorAll('#windowChips .chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('#windowChips .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); designer.updateParam('windowStyle', c.dataset.val); document.getElementById('winCountGrp').style.display = c.dataset.val === 'full' ? 'none' : 'block'; updateStats(); }));
+
+      // Material presets
+      document.querySelectorAll('.preset-chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('.preset-chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); designer.applyMaterialPreset(c.dataset.preset); updateStats(); }));
+
+      // Add-on toggles
+      ['hasFoundation','hasEntrance','hasBalcony','hasPorch','hasGarage','hasTerrace','hasMEP'].forEach(p => {
+        const btn = document.getElementById('tog' + p.charAt(0).toUpperCase() + p.slice(1));
+        btn.addEventListener('click', () => { designer.updateParam(p, !designer.params[p]); btn.textContent = designer.params[p] ? 'ON' : 'OFF'; btn.classList.toggle('active', designer.params[p]); updateStats(); });
       });
 
-      // Toggle buttons
-      document.querySelectorAll('.toggle-row .toggle').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const param = btn.dataset.param;
-          const current = designer.params[param];
-          designer.updateParam(param, !current);
-          btn.textContent = !current ? 'ON' : 'OFF';
-          btn.classList.toggle('active', !current);
-          updateStats();
-        });
+      // Surrounding
+      document.querySelectorAll('#surroundingChips .chip').forEach(c => c.addEventListener('click', () => { document.querySelectorAll('#surroundingChips .chip').forEach(x => x.classList.remove('active')); c.classList.add('active'); designer.updateParam('surrounding', c.dataset.val); updateStats(); }));
+
+      // Placement mode
+      document.querySelectorAll('#placementChips .chip').forEach(c => c.addEventListener('click', () => {
+        const mode = c.dataset.mode;
+        document.querySelectorAll('#placementChips .chip').forEach(x => x.classList.remove('active'));
+        if (designer.placementMode === mode) { designer.setPlacementMode(null); }
+        else { c.classList.add('active'); designer.setPlacementMode(mode); }
+        const hint = document.getElementById('placementHint');
+        const hintText = document.getElementById('placementHintText');
+        if (designer.placementMode) { hint.style.display = 'flex'; hintText.textContent = mode; }
+        else { hint.style.display = 'none'; }
+      }));
+
+      // Events
+      window.addEventListener('componentPlaced', e => updateStats());
+      window.addEventListener('componentsCleared', () => updateStats());
+      window.addEventListener('placementModeChanged', e => {
+        const hint = document.getElementById('placementHint');
+        hint.style.display = e.detail.mode ? 'flex' : 'none';
+        if (e.detail.mode) document.getElementById('placementHintText').textContent = e.detail.mode;
       });
+      window.addEventListener('presetApplied', () => updateStats());
+
+      // Plan view toggle
+      let planMode = false;
+      document.getElementById('btnPlanView').addEventListener('click', () => { planMode = !planMode; designer.setViewMode(planMode ? 'plan' : '3d'); document.getElementById('btnPlanView').innerHTML = planMode ? '<i class="fa-solid fa-cube"></i> 3D View' : '<i class="fa-solid fa-map"></i> Plan View'; });
+
+      // Wireframe
+      document.getElementById('btnWireframe').addEventListener('click', () => { designer.toggleWireframe(); document.getElementById('btnWireframe').classList.toggle('active'); });
 
       updateStats();
     });
