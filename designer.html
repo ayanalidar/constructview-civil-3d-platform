@@ -215,6 +215,10 @@
           ? '<i class="fa-solid fa-xmark"></i> Exit Draw'
           : '<i class="fa-solid fa-draw-polygon"></i> Draw Mode';
         if (drawPanel) drawPanel.style.display = drawActive ? 'block' : 'none';
+        // Crosshair cursor in draw mode
+        canvas.style.cursor = drawActive ? 'crosshair' : '';
+        // Notify designer
+        designer._drawModeActive = drawActive;
       });
     }
 
