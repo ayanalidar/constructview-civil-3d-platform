@@ -114,6 +114,12 @@
 .designer-stats i { color: var(--color-accent); font-size: 0.7rem; }
 .designer-stats strong { color: var(--color-text); font-family: var(--font-mono); }
 
+/* Draw Mode */
+#btnDrawMode.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+/* CAD-style cursor */
+.designer-canvas.cad-mode { cursor: crosshair; }
+
 /* Responsive */
 @media (max-width: 1024px) { .designer-layout { grid-template-columns: 280px 1fr; } }
 @media (max-width: 768px) {

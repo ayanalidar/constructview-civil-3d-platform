@@ -31,6 +31,7 @@
         <div class="topbar-left"><button class="btn-icon" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb"><span>Building Designer</span></div></div>
         <div class="topbar-right">
           <button class="btn btn-outline btn-sm" id="btnPlanView"><i class="fa-solid fa-map"></i> Plan View</button>
+          <button class="btn btn-accent btn-sm" id="btnDrawMode"><i class="fa-solid fa-draw-polygon"></i> Draw Mode</button>
           <button class="btn btn-outline btn-sm" onclick="window.__designer?.resetDefault()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
           <button class="btn btn-accent btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         </div>
@@ -103,16 +104,29 @@
               <div class="param-group" id="winCountGrp"><label>Per Side <span id="winCountVal">3</span></label><input type="range" min="2" max="6" value="3" id="paramWindowCount"></div>
             </div>
 
-            <!-- Placement Tools -->
-            <div class="panel-section">
-              <h4><i class="fa-solid fa-hammer"></i> Place Components</h4>
-              <p style="font-size:0.7rem;color:var(--color-text-muted);margin-bottom:0.5rem;">Click on the ground in 3D view to place</p>
-              <div class="chip-row" id="placementChips">
-                <button class="chip" data-mode="wall"><i class="fa-solid fa-grip-lines"></i> Wall</button>
-                <button class="chip" data-mode="column"><i class="fa-solid fa-grip-lines-vertical"></i> Column</button>
-                <button class="chip" data-mode="staircase"><i class="fa-solid fa-stairs"></i> Stairs</button>
+            <!-- Draw Mode Tools -->
+            <div class="panel-section" id="drawToolsPanel" style="display:none;">
+              <h4><i class="fa-solid fa-draw-polygon"></i> Draw Tools <span style="font-size:0.65rem;color:var(--color-accent);margin-left:auto;">Esc to cancel | Ctrl+Z undo</span></h4>
+              <div class="chip-row" id="drawToolChips">
+                <button class="chip active" data-tool="line"><i class="fa-solid fa-minus"></i> Line</button>
+                <button class="chip" data-tool="rect"><i class="fa-solid fa-square"></i> Rect</button>
+                <button class="chip" data-tool="circle"><i class="fa-solid fa-circle"></i> Circle</button>
+                <button class="chip" data-tool="polygon"><i class="fa-solid fa-draw-polygon"></i> Poly</button>
+                <button class="chip" data-tool="arc"><i class="fa-solid fa-arc"></i> Arc</button>
               </div>
-              <button class="btn btn-outline btn-sm" onclick="window.__designer?.clearComponents()" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear Placed</button>
+              <div class="param-group" style="margin-top:0.5rem;">
+                <label>Grid Snap <span id="snapSizeVal">0.5m</span></label>
+                <input type="range" min="0.1" max="2" value="0.5" step="0.1" id="paramSnapSize">
+              </div>
+              <div id="extrudeControls" style="margin-top:0.5rem;">
+                <div class="param-group">
+                  <label>Extrude Height <span id="extrudeHeightVal">3m</span></label>
+                  <input type="range" min="0.5" max="10" value="3" step="0.5" id="paramExtrudeHeight">
+                </div>
+                <button class="btn btn-accent btn-sm" id="btnExtrude" style="width:100%;justify-content:center;"><i class="fa-solid fa-cubes"></i> Extrude Last Shape to 3D</button>
+              </div>
+              <button class="btn btn-outline btn-sm" id="btnClearDraw" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear All Drawings</button>
+              <p style="font-size:0.7rem;color:var(--color-accent);margin-top:0.5rem;text-align:center;" id="drawShapeCount">0 shapes drawn</p>
             </div>
 
             <!-- Features -->
@@ -172,6 +186,7 @@
   <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
   <script type="module">
     import { BuildingDesigner, MATERIAL_PRESETS } from './js/designer3d.js';
+    import { DrawMode } from './js/drawmode.js';
 
     document.addEventListener('DOMContentLoaded', () => {
       applyBrandColors();
@@ -180,6 +195,23 @@
       if (!canvas) return;
       const designer = new BuildingDesigner(canvas);
       window.__designer = designer;
+
+      // Draw mode
+      const drawMode = new DrawMode(designer);
+      window.__drawMode = drawMode;
+      let drawActive = false;
+
+      // Draw mode toggle
+      const btnDrawMode = document.getElementById('btnDrawMode');
+      const drawPanel = document.getElementById('drawToolsPanel');
+      btnDrawMode.addEventListener('click', () => {
+        drawActive = !drawActive;
+        drawMode.toggle(drawActive);
+        btnDrawMode.classList.toggle('active', drawActive);
+        btnDrawMode.innerHTML = drawActive ? '<i class="fa-solid fa-xmark"></i> Exit Draw' : '<i class="fa-solid fa-draw-polygon"></i> Draw Mode';
+        drawPanel.style.display = drawActive ? 'block' : 'none';
+        designer.setPlacementMode(null);
+      });
 
       function updateStats() {
         const s = designer.getStats();
@@ -263,6 +295,54 @@
       document.getElementById('btnWireframe').addEventListener('click', () => { designer.toggleWireframe(); document.getElementById('btnWireframe').classList.toggle('active'); });
 
       updateStats();
+
+      // === DRAW MODE TOOLS ===
+      document.querySelectorAll('#drawToolChips .chip').forEach(c => c.addEventListener('click', () => {
+        document.querySelectorAll('#drawToolChips .chip').forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        drawMode.setTool(c.dataset.tool);
+      }));
+
+      // Snap size
+      document.getElementById('paramSnapSize').addEventListener('input', e => {
+        drawMode.setSnapSize(parseFloat(e.target.value));
+        document.getElementById('snapSizeVal').textContent = e.target.value + 'm';
+      });
+
+      // Extrude
+      document.getElementById('paramExtrudeHeight').addEventListener('input', e => {
+        document.getElementById('extrudeHeightVal').textContent = e.target.value + 'm';
+      });
+      document.getElementById('btnExtrude').addEventListener('click', () => {
+        const h = parseFloat(document.getElementById('paramExtrudeHeight').value);
+        drawMode.extrudeLast(h);
+      });
+
+      // Clear drawings
+      document.getElementById('btnClearDraw').addEventListener('click', () => {
+        drawMode.clearAll();
+        document.getElementById('drawShapeCount').textContent = '0 shapes drawn';
+      });
+
+      // Draw events
+      window.addEventListener('shapeDrawn', e => {
+        document.getElementById('drawShapeCount').textContent = drawMode.getShapeCount() + ' shapes drawn';
+        showToast('Shape Drawn', `${e.detail.type} — ${Object.values(e.detail).filter((v,i) => i>0).join(', ')}`);
+      });
+      window.addEventListener('drawCleared', () => {
+        document.getElementById('drawShapeCount').textContent = '0 shapes drawn';
+      });
+
+      function showToast(title, msg) {
+        const existing = document.querySelector('.toast');
+        if (existing) existing.remove();
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.style.cssText = 'position:fixed;bottom:60px;right:24px;background:var(--color-bg-card);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:0.75rem 1.25rem;box-shadow:var(--shadow-lg);z-index:3000;min-width:250px;animation:fadeInUp 0.3s ease;';
+        t.innerHTML = `<div style="font-weight:600;font-size:0.85rem;color:var(--color-text);">${title}</div><div style="font-size:0.75rem;color:var(--color-text-secondary);">${msg}</div>`;
+        document.body.appendChild(t);
+        setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 300); }, 2500);
+      }
     });
   </script>
 </body>
