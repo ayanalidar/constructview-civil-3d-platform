@@ -4,367 +4,190 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ConstructView — Civil 3D Construction Platform | White-Label BIM Viewer</title>
-  <meta name="description" content="White-label 3D visualization and project management for civil services companies. Upload designs, walk through them in 3D, detect clashes, measure, annotate, and brand it yours.">
+  <meta name="description" content="White-label 3D visualization for civil services companies. Upload any BIM/CAD design, view in real-time 3D, detect clashes, measure, annotate, and brand it yours.">
   <link rel="stylesheet" href="css/site.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
-  <!-- Navbar -->
   <nav class="navbar" id="navbar">
     <div class="nav-inner">
-      <a href="#hero" class="nav-logo">
-        <svg viewBox="0 0 40 40" fill="none" class="logo-icon"><rect x="2" y="20" width="8" height="18" rx="1" fill="currentColor"/><rect x="13" y="10" width="8" height="28" rx="1" fill="currentColor"/><rect x="24" y="14" width="8" height="24" rx="1" fill="currentColor" opacity="0.6"/><rect x="2" y="16" width="30" height="3" rx="1" fill="var(--color-accent)"/></svg>
-        <span class="logo-text" id="siteBrandName">ConstructView</span>
-      </a>
-      <div class="nav-links" id="navLinks">
-        <a href="#features">Features</a>
-        <a href="#case-studies">Case Studies</a>
-        <a href="#compare">Compare</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#faq">FAQ</a>
-        <a href="index.html" class="btn btn-accent btn-sm">Launch App →</a>
-      </div>
+      <a href="#hero" class="nav-logo"><svg viewBox="0 0 40 40" fill="none" class="logo-icon"><rect x="2" y="20" width="8" height="18" rx="1" fill="currentColor"/><rect x="13" y="10" width="8" height="28" rx="1" fill="currentColor"/><rect x="24" y="14" width="8" height="24" rx="1" fill="currentColor" opacity="0.6"/><rect x="2" y="16" width="30" height="3" rx="1" fill="var(--color-accent)"/></svg><span class="logo-text" id="siteBrandName">ConstructView</span></a>
+      <div class="nav-links" id="navLinks"><a href="#features">Features</a><a href="#case-studies">Case Studies</a><a href="#compare">Compare</a><a href="#pricing">Pricing</a><a href="#security">Security</a><a href="#faq">FAQ</a><a href="index.html" class="btn btn-accent btn-sm">Launch App →</a></div>
       <button class="nav-toggle" id="navToggle" aria-label="Menu"><i class="fa-solid fa-bars"></i></button>
     </div>
   </nav>
 
-  <!-- Hero -->
+  <!-- HERO -->
   <section class="hero" id="hero">
     <div class="hero-bg"><div class="hero-grid"></div><div class="hero-glow"></div><div class="hero-glow-b"></div></div>
     <div class="hero-content">
       <div class="hero-badge"><i class="fa-solid fa-zap"></i> Trusted by 200+ civil engineering firms across India</div>
       <h1>Bring Every Civil Project to Life in <span class="gradient-text">3D</span></h1>
-      <p class="hero-sub">Upload your BIM/CAD designs. Walk inside them. Slice, measure, detect clashes, annotate — all in your browser. Then brand it with your logo and share it with clients. No software, no training.</p>
-      <div class="hero-actions">
-        <a href="index.html" class="btn btn-accent btn-lg"><i class="fa-solid fa-rocket"></i> Try Free Demo</a>
-        <a href="#features" class="btn btn-outline btn-lg"><i class="fa-solid fa-circle-play"></i> Watch Overview</a>
-      </div>
-      <div class="hero-preview">
-        <div class="preview-frame">
-          <div class="preview-header"><span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-title">ConstructView — 3D Viewer</span></div>
-          <div class="preview-body" id="heroPreview3D"><canvas id="heroCanvas" style="width:100%;height:100%;display:block;"></canvas></div>
-        </div>
-        <div class="preview-capabilities"><span><i class="fa-solid fa-rotate"></i> 360° Orbit</span><span><i class="fa-solid fa-scissors"></i> Section Cuts</span><span><i class="fa-solid fa-ruler"></i> Measure</span><span><i class="fa-solid fa-triangle-exclamation"></i> Clash Detect</span><span><i class="fa-solid fa-comment-dots"></i> Annotate</span></div>
-      </div>
+      <p class="hero-sub">Upload your designs. Walk inside them. Measure, slice, detect clashes, annotate — all in your browser. Brand it with your logo and share it with clients. No software. No training.</p>
+      <div class="hero-actions"><a href="index.html" class="btn btn-accent btn-lg"><i class="fa-solid fa-rocket"></i> Try Free Demo</a><a href="#features" class="btn btn-outline btn-lg"><i class="fa-solid fa-circle-play"></i> Explore Features</a></div>
+      <div class="hero-preview"><div class="preview-frame"><div class="preview-header"><span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-dot"></span><span class="preview-title">ConstructView — 3D Viewer</span></div><div class="preview-body"><canvas id="heroCanvas" style="width:100%;height:100%;display:block;"></canvas></div></div><div class="preview-capabilities"><span><i class="fa-solid fa-rotate"></i> 360° Orbit</span><span><i class="fa-solid fa-scissors"></i> Section Cuts</span><span><i class="fa-solid fa-ruler"></i> Measure</span><span><i class="fa-solid fa-triangle-exclamation"></i> Clash Detect</span><span><i class="fa-solid fa-comment-dots"></i> Annotate</span><span><i class="fa-solid fa-mobile-screen"></i> Mobile Ready</span></div></div>
     </div>
   </section>
 
-  <!-- Live Stats -->
-  <section class="stats-strip" id="liveStats">
-    <div class="stat-item"><span class="stat-num count-up" data-target="200">0</span><span class="stat-desc">Civil Firms</span></div>
-    <div class="stat-item"><span class="stat-num count-up" data-target="15000">0</span><span class="stat-desc">Models Rendered</span></div>
-    <div class="stat-item"><span class="stat-num count-up" data-target="8">0</span><span class="stat-desc">File Formats</span></div>
-    <div class="stat-item"><span class="stat-num">99.9%</span><span class="stat-desc">Uptime SLA</span></div>
-    <div class="stat-item"><span class="stat-num count-up" data-target="47000">0</span><span class="stat-desc">Clashes Detected</span></div>
-  </section>
+  <!-- LIVE STATS -->
+  <section class="stats-strip"><div class="stat-item"><span class="stat-num count-up" data-target="200">0</span><span class="stat-desc">Civil Firms</span></div><div class="stat-item"><span class="stat-num count-up" data-target="15000">0</span><span class="stat-desc">Models Rendered</span></div><div class="stat-item"><span class="stat-num count-up" data-target="8">0</span><span class="stat-desc">File Formats</span></div><div class="stat-item"><span class="stat-num">99.9%</span><span class="stat-desc">Uptime SLA</span></div><div class="stat-item"><span class="stat-num count-up" data-target="47000">0</span><span class="stat-desc">Clashes Detected</span></div></section>
 
-  <!-- Trusted By -->
-  <section class="section trusted-section">
-    <div class="section-header"><span class="section-tag">TRUSTED BY</span><h2>Engineering Teams Across India</h2></div>
-    <div class="trusted-grid" id="trustedGrid"></div>
-  </section>
+  <!-- TRUSTED BY -->
+  <section class="section trusted-section"><div class="section-header"><span class="section-tag">TRUSTED BY</span><h2>Engineering Teams Across India</h2></div><div class="trusted-grid" id="trustedGrid"></div></section>
 
-  <!-- Features -->
-  <section id="features" class="section section-alt">
-    <div class="section-header"><span class="section-tag">PLATFORM</span><h2>Everything Your Team Needs. One Platform.</h2><p class="text-muted">No more juggling 5 tools. View, analyze, collaborate, and present — all in one place.</p></div>
-    <div class="features-grid" id="featuresGrid"></div>
-  </section>
+  <!-- FEATURES (9 cards from data) -->
+  <section id="features" class="section section-alt"><div class="section-header"><span class="section-tag">PLATFORM</span><h2>Everything Your Team Needs. One Platform.</h2><p class="text-muted">No more juggling 5 tools. View, analyze, collaborate, and present — all in one place.</p></div><div class="features-grid" id="featuresGrid"></div></section>
 
-  <!-- How It Works -->
-  <section id="how-it-works" class="section">
-    <div class="section-header"><span class="section-tag">WORKFLOW</span><h2>From Upload to Approval in 4 Steps</h2></div>
-    <div class="steps-grid">
-      <div class="step"><div class="step-num">01</div><div class="step-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div><h4>Upload Model</h4><p>Drag & drop any BIM/CAD file. IFC, Revit, DWG, SKP, GLB — we handle all 8 formats.</p></div>
-      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="step"><div class="step-num">02</div><div class="step-icon"><i class="fa-solid fa-magnifying-glass"></i></div><h4>Inspect & Analyze</h4><p>Slice sections, measure distances, run clash detection. Find issues before they hit the site.</p></div>
-      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="step"><div class="step-num">03</div><div class="step-icon"><i class="fa-solid fa-comments"></i></div><h4>Collaborate</h4><p>Pin comments, assign tasks, tag team members. Track every issue to resolution.</p></div>
-      <div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div>
-      <div class="step"><div class="step-num">04</div><div class="step-icon"><i class="fa-solid fa-share-nodes"></i></div><h4>Present & Approve</h4><p>Share a branded link. Client walks through in 3D. Approvals happen faster — no training needed.</p></div>
-    </div>
-  </section>
+  <!-- FEATURE SHOWCASE (visual) -->
+  <section id="showcase" class="section"><div class="section-header"><span class="section-tag">PLATFORM TOUR</span><h2>See ConstructView in Action</h2></div><div class="showcase-grid" id="showcaseGrid"></div></section>
 
-  <!-- Project Types -->
-  <section id="projects" class="section section-alt">
-    <div class="section-header"><span class="section-tag">INDUSTRIES</span><h2>One Platform, Every Civil Discipline</h2><p class="text-muted">From a single home to a 50km expressway — same tool, same workflow, zero learning curve.</p></div>
-    <div class="project-types-grid" id="projectTypesGrid"></div>
-  </section>
+  <!-- WORKFLOW -->
+  <section id="how-it-works" class="section section-alt"><div class="section-header"><span class="section-tag">WORKFLOW</span><h2>From Upload to Approval in 4 Steps</h2></div><div class="steps-grid"><div class="step"><div class="step-num">01</div><div class="step-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div><h4>Upload Model</h4><p>Drag & drop any BIM/CAD file. IFC, Revit, DWG, SKP, GLB — all 8 formats supported.</p></div><div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div><div class="step"><div class="step-num">02</div><div class="step-icon"><i class="fa-solid fa-magnifying-glass"></i></div><h4>Inspect & Analyze</h4><p>Slice sections, measure distances, run clash detection. Find issues before they hit the site.</p></div><div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div><div class="step"><div class="step-num">03</div><div class="step-icon"><i class="fa-solid fa-comments"></i></div><h4>Collaborate</h4><p>Pin comments on the model, assign tasks, tag team members. Track every issue to resolution.</p></div><div class="step-arrow"><i class="fa-solid fa-arrow-right"></i></div><div class="step"><div class="step-num">04</div><div class="step-icon"><i class="fa-solid fa-share-nodes"></i></div><h4>Present & Approve</h4><p>Share a branded link. Client walks through in 3D. Approvals happen faster — no training.</p></div></div></section>
 
-  <!-- Case Studies -->
-  <section id="case-studies" class="section">
-    <div class="section-header"><span class="section-tag">CASE STUDIES</span><h2>Real Results from Real Projects</h2></div>
-    <div class="case-studies-grid" id="caseStudiesGrid"></div>
-  </section>
+  <!-- PROJECT TYPES -->
+  <section id="projects" class="section"><div class="section-header"><span class="section-tag">INDUSTRIES</span><h2>One Platform, Every Civil Discipline</h2><p class="text-muted">From a single home to a 50km expressway — same tool, same workflow, zero learning curve.</p></div><div class="project-types-grid" id="projectTypesGrid"></div></section>
 
-  <!-- Comparison Table -->
-  <section id="compare" class="section section-alt">
-    <div class="section-header"><span class="section-tag">VS THE COMPETITION</span><h2>How ConstructView Stacks Up</h2></div>
-    <div class="compare-wrap"><div class="compare-table" id="compareTable"></div></div>
-  </section>
+  <!-- CASE STUDIES -->
+  <section id="case-studies" class="section section-alt"><div class="section-header"><span class="section-tag">CASE STUDIES</span><h2>Real Results from Real Projects</h2></div><div class="case-studies-grid" id="caseStudiesGrid"></div></section>
 
-  <!-- Pricing -->
-  <section id="pricing" class="section">
-    <div class="section-header"><span class="section-tag">PRICING</span><h2>Simple Pricing. No Hidden Fees.</h2><p class="text-muted">14-day free trial on every plan. All plans include white-label branding.</p></div>
-    <div class="pricing-grid">
-      <div class="price-card">
-        <div class="price-header"><h4>Starter</h4><div class="price"><span class="currency">$</span>49<span class="period">/mo</span></div><p>Small firms with 1-2 active projects</p></div>
-        <ul class="price-features"><li><i class="fa-solid fa-check"></i> Up to 3 active projects</li><li><i class="fa-solid fa-check"></i> 5 team members</li><li><i class="fa-solid fa-check"></i> 3D viewer with all tools</li><li><i class="fa-solid fa-check"></i> Basic white-label</li><li><i class="fa-solid fa-check"></i> Email support</li><li class="disabled"><i class="fa-solid fa-xmark"></i> Clash detection</li><li class="disabled"><i class="fa-solid fa-xmark"></i> Custom domain</li></ul>
-        <a href="index.html" class="btn btn-outline btn-lg price-btn">Start Free Trial</a>
-      </div>
-      <div class="price-card featured">
-        <div class="price-badge">Most Popular</div>
-        <div class="price-header"><h4>Professional</h4><div class="price"><span class="currency">$</span>149<span class="period">/mo</span></div><p>Growing firms with multiple projects</p></div>
-        <ul class="price-features"><li><i class="fa-solid fa-check"></i> Up to 25 active projects</li><li><i class="fa-solid fa-check"></i> Unlimited team members</li><li><i class="fa-solid fa-check"></i> All analysis tools included</li><li><i class="fa-solid fa-check"></i> Full white-label branding</li><li><i class="fa-solid fa-check"></i> Clash detection + reports</li><li><i class="fa-solid fa-check"></i> Priority support</li><li><i class="fa-solid fa-check"></i> Custom domain</li><li><i class="fa-solid fa-check"></i> Role-based access</li></ul>
-        <a href="index.html" class="btn btn-accent btn-lg price-btn">Start Free Trial</a>
-      </div>
-      <div class="price-card">
-        <div class="price-header"><h4>Enterprise</h4><div class="price"><span class="currency">$</span>399<span class="period">/mo</span></div><p>Large firms & multi-tenant deployments</p></div>
-        <ul class="price-features"><li><i class="fa-solid fa-check"></i> Unlimited projects</li><li><i class="fa-solid fa-check"></i> Unlimited team members</li><li><i class="fa-solid fa-check"></i> Everything in Professional</li><li><i class="fa-solid fa-check"></i> Multi-tenant white-label</li><li><i class="fa-solid fa-check"></i> Full API access</li><li><i class="fa-solid fa-check"></i> SSO / SAML</li><li><i class="fa-solid fa-check"></i> Dedicated account manager</li><li><i class="fa-solid fa-check"></i> On-premise deployment</li></ul>
-        <a href="index.html" class="btn btn-outline btn-lg price-btn">Contact Sales</a>
-      </div>
-    </div>
-  </section>
+  <!-- COMPARISON TABLE -->
+  <section id="compare" class="section"><div class="section-header"><span class="section-tag">VS COMPETITORS</span><h2>How ConstructView Stacks Up</h2></div><div class="compare-wrap"><div class="compare-table" id="compareTable"></div></div></section>
 
-  <!-- Testimonials -->
-  <section id="testimonials" class="section section-alt">
-    <div class="section-header"><span class="section-tag">TESTIMONIALS</span><h2>What Our Users Say</h2></div>
-    <div class="testimonial-grid">
-      <div class="testimonial-card"><div class="t-quote"><i class="fa-solid fa-quote-left"></i></div><p>"We used to send PDF markups back and forth for weeks. Now clients walk through the 3D model on their phone and approve changes same-day."</p><div class="t-author"><div class="t-avatar" style="background:#0ea5e9">RK</div><div><strong>Rajesh Kumar</strong><span>Director, Kumar Constructions</span></div></div></div>
-      <div class="testimonial-card"><div class="t-quote"><i class="fa-solid fa-quote-left"></i></div><p>"Clash detection alone saved us ₹12 lakh in rework on our hospital project. Finding a plumbing riser intersecting a column before pouring concrete is priceless."</p><div class="t-author"><div class="t-avatar" style="background:#10b981">MP</div><div><strong>Meera Patel</strong><span>Chief Engineer, Patel Infra</span></div></div></div>
-      <div class="testimonial-card"><div class="t-quote"><i class="fa-solid fa-quote-left"></i></div><p>"We white-labeled ConstructView for 4 contractor clients. Each one thinks we built them a custom platform. Our brand value shot up."</p><div class="t-author"><div class="t-avatar" style="background:#6366f1">AS</div><div><strong>Arun Sharma</strong><span>CEO, BuildTech Solutions</span></div></div></div>
-    </div>
-  </section>
+  <!-- PRICING (with annual toggle) -->
+  <section id="pricing" class="section section-alt"><div class="section-header"><span class="section-tag">PRICING</span><h2>Simple Pricing. No Hidden Fees.</h2><p class="text-muted">14-day free trial on every plan. All plans include white-label branding.</p></div><div class="pricing-toggle"><span>Monthly</span><button class="toggle-switch" id="priceToggle" onclick="togglePricing()"></button><span>Annual <small style="color:var(--color-accent);font-weight:600;">(Save 20%)</small></span></div><div class="pricing-grid" id="pricingGrid"></div></section>
 
-  <!-- Integrations -->
-  <section id="integrations" class="section">
-    <div class="section-header"><span class="section-tag">INTEGRATIONS</span><h2>Works With Your Existing Tools</h2><p class="text-muted">Import from any major BIM/CAD software. Export to your workflow.</p></div>
-    <div class="partner-grid" id="partnerGrid"></div>
-  </section>
+  <!-- SECURITY -->
+  <section id="security" class="section"><div class="section-header"><span class="section-tag">SECURITY</span><h2>Enterprise-Grade Security, Built-In</h2><p class="text-muted">Your project data is protected at every layer — from upload to client delivery.</p></div><div class="security-grid" id="securityGrid"></div></section>
 
-  <!-- Blog / Resources -->
-  <section id="resources" class="section section-alt">
-    <div class="section-header"><span class="section-tag">RESOURCES</span><h2>Latest from the ConstructView Blog</h2></div>
-    <div class="blog-grid" id="blogGrid"></div>
-  </section>
+  <!-- GETTING STARTED -->
+  <section id="start" class="section section-alt"><div class="section-header"><span class="section-tag">GET STARTED</span><h2>Up and Running in Under 5 Minutes</h2></div><div class="getting-started-grid" id="gettingStartedGrid"></div></section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="section"><div class="section-header"><span class="section-tag">TESTIMONIALS</span><h2>Trusted by Civil Engineering Leaders</h2></div><div class="testimonial-grid" id="testimonialGrid"></div></section>
+
+  <!-- INTEGRATIONS -->
+  <section id="integrations" class="section section-alt"><div class="section-header"><span class="section-tag">INTEGRATIONS</span><h2>Works With Your Existing Tools</h2><p class="text-muted">Import from any major BIM/CAD software. Export to your workflow. Connect to your stack.</p></div><div class="partner-grid" id="partnerGrid"></div></section>
+
+  <!-- AWARDS -->
+  <section id="awards" class="section"><div class="section-header"><span class="section-tag">RECOGNITION</span><h2>Industry Recognition</h2></div><div class="awards-grid" id="awardsGrid"></div></section>
+
+  <!-- BLOG -->
+  <section id="resources" class="section section-alt"><div class="section-header"><span class="section-tag">RESOURCES</span><h2>Latest from the ConstructView Blog</h2></div><div class="blog-grid" id="blogGrid"></div></section>
+
+  <!-- ROADMAP -->
+  <section id="roadmap" class="section"><div class="section-header"><span class="section-tag">ROADMAP</span><h2>What We Are Building Next</h2></div><div class="roadmap-grid" id="roadmapGrid"></div></section>
 
   <!-- FAQ -->
-  <section id="faq" class="section">
-    <div class="section-header"><span class="section-tag">FAQ</span><h2>Frequently Asked Questions</h2></div>
-    <div class="faq-list" id="faqList"></div>
-  </section>
+  <section id="faq" class="section section-alt"><div class="section-header"><span class="section-tag">FAQ</span><h2>Frequently Asked Questions</h2></div><div class="faq-list" id="faqList"></div></section>
 
-  <!-- Final CTA -->
-  <section class="cta-section">
-    <div class="cta-glow"></div>
-    <h2>Ready to Transform How You Present Civil Projects?</h2>
-    <p>Upload your first model. Walk through it. Brand it yours. All in under 5 minutes.</p>
-    <div class="cta-actions">
-      <a href="index.html" class="btn btn-accent btn-lg"><i class="fa-solid fa-rocket"></i> Launch Demo</a>
-      <a href="#pricing" class="btn btn-outline btn-lg"><i class="fa-solid fa-calendar"></i> See Plans</a>
-    </div>
-  </section>
+  <!-- CTA -->
+  <section class="cta-section"><div class="cta-glow"></div><h2>Ready to Transform How You Present Civil Projects?</h2><p>Upload your first model. Walk through it. Brand it yours. All in under 5 minutes.</p><div class="cta-actions"><a href="index.html" class="btn btn-accent btn-lg"><i class="fa-solid fa-rocket"></i> Launch Demo</a><a href="#pricing" class="btn btn-outline btn-lg"><i class="fa-solid fa-calendar"></i> See Plans</a></div></section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="newsletter-bar">
-      <div class="nl-text"><strong>Stay updated.</strong> Product news, BIM tips, and case studies — once a month.</div>
-      <form class="nl-form" onsubmit="event.preventDefault(); showSiteToast('Subscribed!', 'Check your inbox for confirmation.');">
-        <input type="email" placeholder="your@email.com" required>
-        <button type="submit" class="btn btn-accent btn-sm">Subscribe</button>
-      </form>
-    </div>
-    <div class="footer-grid">
-      <div class="footer-brand"><span class="footer-logo" id="footerBrandName">ConstructView</span><p>Civil 3D visualization platform for the builders of tomorrow. Made for homes, roads, hospitals, bridges, and everything civil engineers build.</p></div>
-      <div class="footer-col"><h5>Product</h5><a href="#features">Features</a><a href="#case-studies">Case Studies</a><a href="#compare">Compare</a><a href="#pricing">Pricing</a></div>
-      <div class="footer-col"><h5>Resources</h5><a href="#faq">FAQ</a><a href="#resources">Blog</a><a href="#integrations">Integrations</a><a href="index.html">Live Demo</a></div>
-      <div class="footer-col"><h5>Company</h5><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy</a><a href="#">Terms</a></div>
-    </div>
-    <div class="footer-bottom"><p>&copy; 2026 ConstructView. All rights reserved.</p><div class="footer-social"><a href="#"><i class="fa-brands fa-github"></i></a><a href="#"><i class="fa-brands fa-linkedin"></i></a><a href="#"><i class="fa-brands fa-x-twitter"></i></a><a href="#"><i class="fa-brands fa-youtube"></i></a></div></div>
-  </footer>
+  <!-- FOOTER -->
+  <footer class="footer"><div class="newsletter-bar"><div class="nl-text"><strong>Stay updated.</strong> Product news, BIM tips, and case studies — once a month.</div><form class="nl-form" onsubmit="event.preventDefault(); showSiteToast('Subscribed!','Check your inbox for confirmation.');"><input type="email" placeholder="your@email.com" required><button type="submit" class="btn btn-accent btn-sm">Subscribe</button></form></div><div class="footer-grid"><div class="footer-brand"><span class="footer-logo" id="footerBrandName">ConstructView</span><p>Civil 3D visualization platform for the builders of tomorrow. Homes, roads, hospitals, bridges, and everything civil engineers build.</p></div><div class="footer-col"><h5>Product</h5><a href="#features">Features</a><a href="#case-studies">Case Studies</a><a href="#compare">Compare</a><a href="#pricing">Pricing</a><a href="#roadmap">Roadmap</a></div><div class="footer-col"><h5>Resources</h5><a href="#faq">FAQ</a><a href="#resources">Blog</a><a href="#integrations">Integrations</a><a href="#start">Getting Started</a><a href="index.html">Live Demo</a></div><div class="footer-col"><h5>Company</h5><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#security">Security</a></div></div><div class="footer-bottom"><p>&copy; 2026 ConstructView. All rights reserved.</p><div class="footer-social"><a href="#"><i class="fa-brands fa-github"></i></a><a href="#"><i class="fa-brands fa-linkedin"></i></a><a href="#"><i class="fa-brands fa-x-twitter"></i></a><a href="#"><i class="fa-brands fa-youtube"></i></a></div></div></footer>
 
-  <!-- Back to top -->
   <button class="back-to-top" id="backToTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
-
-  <!-- Cookie notice -->
   <div class="cookie-bar" id="cookieBar"><span>We use cookies to improve your experience.</span><button class="btn btn-accent btn-sm" onclick="document.getElementById('cookieBar').style.display='none'">Got it</button></div>
-
-  <!-- Toast -->
   <div class="site-toast" id="siteToast"></div>
 
   <script src="js/data.js"></script>
   <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }</script>
   <script type="module">
     import * as THREE from 'three';
-
-    // ===== 3D HERO BACKGROUND =====
-    const heroCanvas = document.getElementById('heroCanvas');
-    if (heroCanvas) {
-      const heroScene = new THREE.Scene();
-      const heroCamera = new THREE.PerspectiveCamera(45, heroCanvas.parentElement.clientWidth / 280, 1, 50);
-      heroCamera.position.set(8, 6, 12);
-      heroCamera.lookAt(0, 3, 0);
-      const heroRenderer = new THREE.WebGLRenderer({ canvas: heroCanvas, antialias: true, alpha: true });
-      heroRenderer.setSize(heroCanvas.parentElement.clientWidth, 280);
-      heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-      heroScene.add(new THREE.AmbientLight(0x404060, 1.5));
-      const sun = new THREE.DirectionalLight(0xfff5e6, 3);
-      sun.position.set(10, 12, 8);
-      heroScene.add(sun);
-      heroScene.add(new THREE.HemisphereLight(0x8899cc, 0x334455, 0.6));
-
+    const hc = document.getElementById('heroCanvas');
+    if (hc) {
+      const s = new THREE.Scene(); const c = new THREE.PerspectiveCamera(45, hc.parentElement.clientWidth/280, 1, 50); c.position.set(8,6,12); c.lookAt(0,3,0);
+      const r = new THREE.WebGLRenderer({canvas:hc,antialias:true,alpha:true}); r.setSize(hc.parentElement.clientWidth,280); r.setPixelRatio(Math.min(devicePixelRatio,1.5));
+      s.add(new THREE.AmbientLight(0x404060,1.5)); const sun = new THREE.DirectionalLight(0xfff5e6,3); sun.position.set(10,12,8); s.add(sun); s.add(new THREE.HemisphereLight(0x8899cc,0x334455,0.6));
       const bld = new THREE.Group();
-      const wallMat = new THREE.MeshStandardMaterial({ color: 0xe8e0d8, roughness: 0.4 });
-      const glassMat = new THREE.MeshStandardMaterial({ color: 0x87ceeb, roughness: 0.1, metalness: 0.3, transparent: true, opacity: 0.45 });
-      const roofMat = new THREE.MeshStandardMaterial({ color: 0x5c4033, roughness: 0.7 });
-      const steelMat = new THREE.MeshStandardMaterial({ color: 0x8899aa, roughness: 0.3, metalness: 0.8 });
-      const mepMat = new THREE.MeshStandardMaterial({ color: 0xff6b35, roughness: 0.3, metalness: 0.5, emissive: 0x220000, emissiveIntensity: 0.3 });
-
-      for (let f = 0; f < 3; f++) {
-        const y = f * 3.3, h = f === 2 ? 3.0 : 3.2;
-        const wall = new THREE.Mesh(new THREE.BoxGeometry(8, h, 7), wallMat);
-        wall.position.set(0, y + h/2, 0); wall.castShadow = true;
-        bld.add(wall);
-        // MEP horizontal
-        if (f < 2) { const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 7.5, 8), mepMat); pipe.position.set(0, y + h + 0.3, 0); bld.add(pipe); }
-        // Vert riser
-        if (f < 2) { const riser = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.0, 8), new THREE.MeshStandardMaterial({ color: 0x4488cc, roughness: 0.3, metalness: 0.5 })); riser.position.set(-2.5, y + 1.8, -2); bld.add(riser); }
-      }
-      for (let i = 0; i < 3; i++) {
-        for (const z of [3.55, -3.55]) {
-          const win = new THREE.Mesh(new THREE.BoxGeometry(1, 1.2, 0.08), glassMat);
-          win.position.set(-2.5 + i * 2.5, 1.6 + i * 3.3, z); bld.add(win);
-        }
-      }
-      const roof = new THREE.Mesh(new THREE.ConeGeometry(5.5, 1.5, 4), roofMat);
-      roof.position.y = 9.8; roof.rotation.y = Math.PI/4; roof.castShadow = true;
-      bld.add(roof);
-      const found = new THREE.Mesh(new THREE.BoxGeometry(8.6, 0.35, 7.6), new THREE.MeshStandardMaterial({ color: 0x555555, roughness: 0.7 }));
-      found.position.y = -0.17; bld.add(found);
-
-      heroScene.add(bld);
-
-      function heroAnimate() {
-        requestAnimationFrame(heroAnimate);
-        bld.rotation.y += 0.003;
-        heroRenderer.render(heroScene, heroCamera);
-      }
-      heroAnimate();
-
-      window.addEventListener('resize', () => {
-        const w = heroCanvas.parentElement.clientWidth;
-        if (w > 0) { heroCamera.aspect = w / 280; heroCamera.updateProjectionMatrix(); heroRenderer.setSize(w, 280); }
-      });
+      const wm = new THREE.MeshStandardMaterial({color:0xe8e0d8,roughness:0.4}), gm = new THREE.MeshStandardMaterial({color:0x87ceeb,roughness:0.1,metalness:0.3,transparent:true,opacity:0.45});
+      const rm = new THREE.MeshStandardMaterial({color:0x5c4033,roughness:0.7}), mm = new THREE.MeshStandardMaterial({color:0xff6b35,roughness:0.3,metalness:0.5,emissive:0x220000,emissiveIntensity:0.3});
+      for (let f=0;f<3;f++) { const y=f*3.3,h=f===2?3.0:3.2; const w=new THREE.Mesh(new THREE.BoxGeometry(8,h,7),wm); w.position.set(0,y+h/2,0); bld.add(w); if(f<2){const p=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,7.5,8),mm);p.position.set(0,y+h+0.3,0);bld.add(p);} if(f<2){const ris=new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.08,3,8),new THREE.MeshStandardMaterial({color:0x4488cc,roughness:0.3,metalness:0.5}));ris.position.set(-2.5,y+1.8,-2);bld.add(ris);} }
+      for (let i=0;i<3;i++) for (const z of[3.55,-3.55]){const win=new THREE.Mesh(new THREE.BoxGeometry(1,1.2,0.08),gm);win.position.set(-2.5+i*2.5,1.6+i*3.3,z);bld.add(win);}
+      const roof=new THREE.Mesh(new THREE.ConeGeometry(5.5,1.5,4),rm);roof.position.y=9.8;roof.rotation.y=Math.PI/4;bld.add(roof);bld.add(new THREE.Mesh(new THREE.BoxGeometry(8.6,0.35,7.6),new THREE.MeshStandardMaterial({color:0x555555,roughness:0.7})).translateY(-0.17));
+      s.add(bld);(function anim(){requestAnimationFrame(anim);bld.rotation.y+=0.003;r.render(s,c);})();
+      addEventListener('resize',()=>{const w=hc.parentElement.clientWidth;if(w>0){c.aspect=w/280;c.updateProjectionMatrix();r.setSize(w,280);}});
     }
   </script>
   <script>
-    // === BRANDING ===
-    applyBrandColors();
-    document.getElementById('siteBrandName').textContent = APP_DATA.brand.name;
-    document.getElementById('footerBrandName').textContent = APP_DATA.brand.name;
+    applyBrandColors(); document.getElementById('siteBrandName').textContent=APP_DATA.brand.name; document.getElementById('footerBrandName').textContent=APP_DATA.brand.name;
 
-    // === LIVE STATS COUNTER ===
-    const observerOpts = { threshold: 0.5 };
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const target = parseInt(el.dataset.target);
-          const duration = 2000;
-          const start = performance.now();
-          function tick(now) {
-            const progress = Math.min((now - start) / duration, 1);
-            const eased = 1 - Math.pow(1 - progress, 3);
-            el.textContent = Math.floor(eased * target).toLocaleString();
-            if (progress < 1) requestAnimationFrame(tick);
-          }
-          requestAnimationFrame(tick);
-          countObserver.unobserve(el);
-        }
-      });
-    }, observerOpts);
-    document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+    // Stats counter
+    const co = new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const el=e.target,t=+el.dataset.target,d=2000,s=performance.now();function tick(n){const p=Math.min((n-s)/d,1);el.textContent=Math.floor((1-Math.pow(1-p,3))*t).toLocaleString();if(p<1)requestAnimationFrame(tick)}requestAnimationFrame(tick);co.unobserve(el);}});},{threshold:0.5});
+    document.querySelectorAll('.count-up').forEach(el=>co.observe(el));
 
-    // === MOBILE NAV ===
-    document.getElementById('navToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
-    window.addEventListener('scroll', () => document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50));
+    // Nav
+    document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+    addEventListener('scroll',()=>document.getElementById('navbar').classList.toggle('scrolled',scrollY>50));
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});document.getElementById('navLinks').classList.remove('open');}});});
 
-    // === SMOOTH SCROLL ===
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', (e) => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); document.getElementById('navLinks').classList.remove('open'); }
-      });
-    });
+    // Reveal
+    const ro=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
 
-    // === REVEAL ANIMATIONS ===
-    const revealObserver = new IntersectionObserver((entries) => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+    // Back to top
+    const btt=document.getElementById('backToTop');addEventListener('scroll',()=>btt.classList.toggle('visible',scrollY>600));btt.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
 
-    // === BACK TO TOP ===
-    const btt = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => { btt.classList.toggle('visible', window.scrollY > 600); });
-    btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    // Trusted by
+    const tn=['Larsen & Toubro','Tata Projects','Shapoorji Pallonji','Afcons Infrastructure','HCC Ltd','Godrej Properties','Prestige Group','Sobha Ltd','Oberoi Realty','Brigade Group','NCC Ltd','PNC Infratech','JMC Projects','IRB Infrastructure','KEC International'];
+    document.getElementById('trustedGrid').innerHTML=tn.map(n=>`<div class="trusted-logo">${n}</div>`).join('');
 
-    // === TRUSTED BY ===
-    const trustedNames = ['Larsen & Toubro', 'Tata Projects', 'Shapoorji Pallonji', 'Afcons Infrastructure', 'HCC Ltd', 'Godrej Properties', 'Prestige Group', 'Sobha Ltd', 'Oberoi Realty', 'Brigade Group', 'NCC Ltd', 'PNC Infratech'];
-    const tg = document.getElementById('trustedGrid');
-    if (tg) tg.innerHTML = trustedNames.map(n => `<div class="trusted-logo">${n}</div>`).join('');
+    // Features
+    const fd= APP_DATA.siteFeatures || [];
+    document.getElementById('featuresGrid').innerHTML=fd.map(f=>`<div class="feature-card reveal"><div class="feature-icon" style="--f-color:${f.color}"><i class="fa-solid ${f.icon}"></i></div><h3>${f.title}</h3><p>${f.desc}</p><ul class="feature-list">${f.items.map(i=>`<li><i class="fa-solid fa-check"></i>${i}</li>`).join('')}</ul></div>`).join('');
 
-    // === FEATURES (data-driven) ===
-    const featuresData = [
-      { icon: 'fa-cube', color: 'var(--color-accent)', title: 'Real-Time 3D Viewer', desc: 'Upload IFC, RVT, DWG, SKP, GLB — view instantly in WebGL. Walk from outside to inside in one motion. No installs.', items: ['Orbit, pan, zoom, walkthrough', 'Wireframe & X-ray modes', 'Real-time shadows'] },
-      { icon: 'fa-scissors', color: '#10b981', title: 'Section Clipping', desc: 'Slice through any axis to inspect internal structure, MEP routing, and rebar placement. Live clipping planes update instantly.', items: ['X, Y, Z axis cuts', 'Visual cut plane indicators', 'One-click clear'] },
-      { icon: 'fa-triangle-exclamation', color: '#f59e0b', title: 'Clash Detection', desc: 'Auto-find conflicts between disciplines. MEP vs structural? Flagged with severity grading. Export clash reports as PDF.', items: ['Cross-discipline scanning', 'Critical/Warning/Minor grades', 'Pulsing visual markers'] },
-      { icon: 'fa-ruler-combined', color: '#6366f1', title: 'On-Model Measurement', desc: 'Click any two points on the 3D surface. Real-time distance with dashed preview, then permanent labeled measurement.', items: ['Point-to-point distance', 'Live preview line', 'Persistent labels'] },
-      { icon: 'fa-palette', color: '#ec4899', title: 'White-Label Branding', desc: 'Each client gets their own branded experience. Swap logo, colors, domain from admin panel in minutes.', items: ['8 preset + custom hex', 'Custom domain & logo', 'Watermarked exports'] },
-      { icon: 'fa-users-gear', color: '#14b8a6', title: 'Role-Based Access', desc: '5 predefined roles. Set permissions per role: view-only, annotate, edit, or full admin. Per-project access control.', items: ['5 roles + custom', 'Per-project permissions', 'Client download restrictions'] },
-    ];
-    const fg = document.getElementById('featuresGrid');
-    if (fg) fg.innerHTML = featuresData.map(f => `<div class="feature-card reveal"><div class="feature-icon" style="--f-color:${f.color}"><i class="fa-solid ${f.icon}"></i></div><h3>${f.title}</h3><p>${f.desc}</p><ul class="feature-list">${f.items.map(i => `<li><i class="fa-solid fa-check"></i> ${i}</li>`).join('')}</ul></div>`).join('');
+    // Showcase
+    const sc=[{icon:'fa-cube',t:'3D Viewer',d:'Real-time WebGL rendering of any BIM/CAD model. Orbit, pan, zoom, walk inside. No installs.'},{icon:'fa-scissors',t:'Section Cuts',d:'Slice through any axis. See inside walls. Inspect MEP routing. Drag the slider to move the cut plane.'},{icon:'fa-triangle-exclamation',t:'Clash Detection',d:'Auto-scan for discipline conflicts. Red markers for critical, orange for warning, yellow for minor.'},{icon:'fa-ruler-combined',t:'Measurement',d:'Click two points. Real-time preview. Permanent labelled distance. No separate tool needed.'},{icon:'fa-palette',t:'White-Label',d:'Your logo. Your colors. Your domain. Looks like your custom platform. 8 presets + any custom hex.'},{icon:'fa-comment-dots',t:'Annotations',d:'Pin comments on the model. Assign to team. Track from open to resolved. Linked to exact 3D position.'}];
+    document.getElementById('showcaseGrid').innerHTML=sc.map(s=>`<div class="showcase-card reveal"><div class="showcase-icon"><i class="fa-solid ${s.icon}"></i></div><h4>${s.t}</h4><p>${s.d}</p></div>`).join('');
 
-    // === PROJECT TYPES (data-driven) ===
-    const ptColors = { residential: '#0ea5e9', infrastructure: '#f97316', healthcare: '#10b981', commercial: '#8b5cf6', industrial: '#64748b' };
-    const ptIcons = { residential: 'fa-house', infrastructure: 'fa-road', healthcare: 'fa-hospital', commercial: 'fa-building', industrial: 'fa-industry' };
-    const ptLabels = { residential: 'Residential', infrastructure: 'Infrastructure', healthcare: 'Healthcare', commercial: 'Commercial', industrial: 'Industrial' };
-    const ptDescs = { residential: 'Homes, apartments, townships. Walk clients through their living room before a brick is laid.', infrastructure: 'Roads, highways, bridges, tunnels. Linear infrastructure with profile views and GIS overlay.', healthcare: 'Hospitals, clinics, labs. Clean/dirty zone flows, medical equipment placement verification.', commercial: 'Offices, malls, mixed-use. Tenant fit-out visualization and retail area analysis.', industrial: 'Factories, warehouses, plants. Clash-heavy coordination with dense MEP and structural.' };
-    const typeCounts = {};
-    APP_DATA.projects.forEach(p => { typeCounts[p.type] = (typeCounts[p.type] || 0) + 1; });
-    const ptg = document.getElementById('projectTypesGrid');
-    if (ptg) ptg.innerHTML = Object.keys(ptLabels).map(t => `<div class="pt-card reveal"><div class="pt-icon" style="--pt-color:${ptColors[t]}"><i class="fa-solid ${ptIcons[t]}"></i></div><h4>${ptLabels[t]}</h4><p>${ptDescs[t]}</p><span class="pt-count">${typeCounts[t] || 0} active projects</span></div>`).join('');
+    // Project types
+    const ptC={residential:'#0ea5e9',infrastructure:'#f97316',healthcare:'#10b981',commercial:'#8b5cf6',industrial:'#64748b'},ptI={residential:'fa-house',infrastructure:'fa-road',healthcare:'fa-hospital',commercial:'fa-building',industrial:'fa-industry'},ptL={residential:'Residential',infrastructure:'Infrastructure',healthcare:'Healthcare',commercial:'Commercial',industrial:'Industrial'},ptD={residential:'Homes, apartments, townships. Walk clients through their future living room before a single brick is laid.',infrastructure:'Roads, highways, bridges, tunnels. Linear infrastructure with profile views and GIS overlay.',healthcare:'Hospitals, clinics, labs. Clean/dirty zone flows and medical equipment placement verification.',commercial:'Offices, malls, mixed-use towers. Tenant fit-out visualization and retail area analysis.',industrial:'Factories, warehouses, plants. Clash-heavy coordination with dense MEP and structural.'};
+    const tc={};APP_DATA.projects.forEach(p=>{tc[p.type]=(tc[p.type]||0)+1;});
+    document.getElementById('projectTypesGrid').innerHTML=Object.keys(ptL).map(t=>`<div class="pt-card reveal"><div class="pt-icon" style="--pt-color:${ptC[t]}"><i class="fa-solid ${ptI[t]}"></i></div><h4>${ptL[t]}</h4><p>${ptD[t]}</p><span class="pt-count">${tc[t]||0} active projects</span></div>`).join('');
 
-    // === CASE STUDIES ===
-    const csg = document.getElementById('caseStudiesGrid');
-    if (csg) csg.innerHTML = APP_DATA.caseStudies.map((cs, i) => `<div class="cs-card reveal"><div class="cs-header"><h3>${cs.title}</h3><p class="cs-subtitle">${cs.subtitle}</p></div><div class="cs-body"><div class="cs-story"><div class="cs-part"><strong>The Problem</strong><p>${cs.problem}</p></div><div class="cs-part"><strong>The Solution</strong><p>${cs.solution}</p></div></div><div class="cs-results">${cs.results.map(r => `<div class="cs-stat"><span class="cs-stat-value">${r.value}</span><span class="cs-stat-label">${r.label}</span></div>`).join('')}</div><blockquote class="cs-quote">"${cs.quote}"<cite>— ${cs.author}</cite></blockquote></div></div>`).join('');
+    // Case studies
+    document.getElementById('caseStudiesGrid').innerHTML=APP_DATA.caseStudies.map(cs=>`<div class="cs-card reveal"><div class="cs-header"><h3>${cs.title}</h3><p class="cs-subtitle">${cs.subtitle}</p></div><div class="cs-body"><div class="cs-story"><div class="cs-part"><strong>The Problem</strong><p>${cs.problem}</p></div><div class="cs-part"><strong>The Solution</strong><p>${cs.solution}</p></div></div><div class="cs-results">${cs.results.map(r=>`<div class="cs-stat"><span class="cs-stat-value">${r.value}</span><span class="cs-stat-label">${r.label}</span></div>`).join('')}</div><blockquote class="cs-quote">"${cs.quote}"<cite>— ${cs.author}</cite></blockquote></div></div>`).join('');
 
-    // === COMPARISON TABLE ===
-    const ct = document.getElementById('compareTable');
-    if (ct) {
-      const headers = ['Feature', 'ConstructView', 'Autodesk ACC', 'Trimble Connect', 'Dalux', 'BIMcollab'];
-      ct.innerHTML = `<table><thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead><tbody>${APP_DATA.competitors.map(c => `<tr><td>${c.feature}</td>${['cv','autodesk','trimble','dalux','bimCollab'].map(k => `<td class="comp-cell">${c[k] ? '<i class="fa-solid fa-check comp-yes"></i>' : '<i class="fa-solid fa-xmark comp-no"></i>'}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
-    }
+    // Comparison
+    const rows = APP_DATA.competitorRows || APP_DATA.competitors;
+    document.getElementById('compareTable').innerHTML=`<table><thead><tr><th>Feature</th><th>ConstructView</th><th>Autodesk ACC</th><th>Trimble Connect</th><th>Dalux</th><th>BIMcollab</th></tr></thead><tbody>${rows.map(c=>`<tr><td>${c.feature}</td>${['cv','autodesk','trimble','dalux','bimCollab'].map(k=>`<td class="comp-cell">${c[k]?'<i class="fa-solid fa-check comp-yes"></i>':'<i class="fa-solid fa-xmark comp-no"></i>'}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
 
-    // === PARTNERS ===
-    const pg = document.getElementById('partnerGrid');
-    if (pg) pg.innerHTML = APP_DATA.partners.map(p => `<div class="partner-card reveal"><span class="partner-name">${p.name}</span></div>`).join('');
+    // Pricing (with toggle)
+    const monthlyPrices=[{tier:'Starter',price:49,desc:'Small firms with 1-2 active projects',features:[{ok:true,t:'Up to 3 active projects'},{ok:true,t:'5 team members'},{ok:true,t:'3D viewer with all tools'},{ok:true,t:'Basic white-label branding'},{ok:true,t:'Email support'},{ok:false,t:'Clash detection'},{ok:false,t:'Custom domain'},{ok:false,t:'Role-based access'}]},{tier:'Professional',price:149,desc:'Growing firms with multiple projects',featured:true,features:[{ok:true,t:'Up to 25 active projects'},{ok:true,t:'Unlimited team members'},{ok:true,t:'All analysis tools'},{ok:true,t:'Full white-label branding'},{ok:true,t:'Clash detection + reports'},{ok:true,t:'Priority support'},{ok:true,t:'Custom domain'},{ok:true,t:'Role-based access'}]},{tier:'Enterprise',price:399,desc:'Large firms & multi-tenant deployments',features:[{ok:true,t:'Unlimited projects'},{ok:true,t:'Unlimited team members'},{ok:true,t:'Everything in Professional'},{ok:true,t:'Multi-tenant white-label'},{ok:true,t:'Full API access'},{ok:true,t:'SSO / SAML'},{ok:true,t:'Dedicated account manager'},{ok:true,t:'On-premise deployment'}]}];
+    let isAnnual=false;
+    function renderPricing(){const pg=document.getElementById('pricingGrid');pg.innerHTML=monthlyPrices.map(p=>{const pr=isAnnual?Math.round(p.price*0.8*10)/10:p.price;return`<div class="price-card${p.featured?' featured':''}">${p.featured?'<div class="price-badge">Most Popular</div>':''}<div class="price-header"><h4>${p.tier}</h4><div class="price"><span class="currency">$</span>${pr}<span class="period">/mo</span></div><p>${p.desc}</p></div><ul class="price-features">${p.features.map(f=>`<li class="${f.ok?'':'disabled'}"><i class="fa-solid fa-${f.ok?'check':'xmark'}"></i>${f.t}</li>`).join('')}</ul><a href="index.html" class="btn ${p.featured?'btn-accent':'btn-outline'} btn-lg price-btn">${p.tier==='Enterprise'?'Contact Sales':'Start Free Trial'}</a></div>`}).join('');}renderPricing();
+    window.togglePricing=function(){isAnnual=!isAnnual;document.getElementById('priceToggle').classList.toggle('annual',isAnnual);renderPricing();};
 
-    // === BLOG ===
-    const bg = document.getElementById('blogGrid');
-    if (bg) bg.innerHTML = APP_DATA.blogPosts.map(b => `<div class="blog-card reveal"><span class="blog-tag">${b.tag}</span><h4>${b.title}</h4><p>${b.excerpt}</p><div class="blog-meta"><span>${formatDate(b.date)}</span><span>${b.readTime} read</span></div></div>`).join('');
+    // Security
+    document.getElementById('securityGrid').innerHTML=APP_DATA.securityFeatures.map(s=>`<div class="security-card reveal"><div class="feature-icon" style="--f-color:var(--color-accent)"><i class="fa-solid ${s.icon}"></i></div><h4>${s.title}</h4><p>${s.desc}</p></div>`).join('');
 
-    // === FAQ ===
-    const fl = document.getElementById('faqList');
-    if (fl) fl.innerHTML = APP_DATA.faqs.map((f, i) => `<div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('open')">${f.q}<i class="fa-solid fa-chevron-down faq-arrow"></i></button><div class="faq-answer"><p>${f.a}</p></div></div>`).join('');
+    // Getting started
+    document.getElementById('gettingStartedGrid').innerHTML=APP_DATA.gettingStarted.map(gs=>`<div class="gs-card reveal"><div class="gs-num">${gs.step}</div><div class="gs-icon"><i class="fa-solid ${gs.icon}"></i></div><h4>${gs.title}</h4><p>${gs.desc}</p></div>`).join('');
 
-    // === TOAST ===
-    function showSiteToast(title, msg) {
-      const t = document.getElementById('siteToast');
-      t.innerHTML = `<div class="site-toast-inner"><strong>${title}</strong> ${msg}</div>`;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3500);
-    }
-    window.showSiteToast = showSiteToast;
+    // Testimonials
+    document.getElementById('testimonialGrid').innerHTML=APP_DATA.moreTestimonials.map(t=>`<div class="testimonial-card reveal"><div class="t-quote"><i class="fa-solid fa-quote-left"></i></div><p>"${t.quote}"</p><div class="t-author"><div class="t-avatar" style="background:${t.color}">${t.initials}</div><div><strong>${t.author}</strong><span>${t.role}</span></div></div></div>`).join('');
+
+    // Partners
+    document.getElementById('partnerGrid').innerHTML=APP_DATA.partnerDetails.map(p=>`<div class="partner-card reveal"><div class="partner-icon"><i class="fa-solid ${p.icon}"></i></div><span class="partner-name">${p.name}</span><span class="partner-desc">${p.desc}</span></div>`).join('');
+
+    // Awards
+    document.getElementById('awardsGrid').innerHTML=APP_DATA.awards.map(a=>`<div class="award-card reveal"><div class="award-icon"><i class="fa-solid fa-award"></i></div><h4>${a.title}</h4><span>${a.org} — ${a.year}</span></div>`).join('');
+
+    // Blog
+    document.getElementById('blogGrid').innerHTML=APP_DATA.blogPosts.map(b=>`<div class="blog-card reveal"><span class="blog-tag">${b.tag}</span><h4>${b.title}</h4><p>${b.excerpt}</p><div class="blog-meta"><span>${formatDate(b.date)}</span><span>${b.readTime} read</span></div></div>`).join('');
+
+    // Roadmap
+    const rsColors={'In Development':'#10b981','Planned':'#6366f1','Research':'#f59e0b'};
+    document.getElementById('roadmapGrid').innerHTML=APP_DATA.roadmap.map(rm=>`<div class="roadmap-card reveal"><div class="roadmap-status" style="--rs-color:${rsColors[rm.status]}"></div><div><h4>${rm.title}</h4><p>${rm.desc}</p><span class="roadmap-eta">${rm.status} · ${rm.eta}</span></div></div>`).join('');
+
+    // FAQ
+    document.getElementById('faqList').innerHTML=APP_DATA.faqs.map(f=>`<div class="faq-item"><button class="faq-question" onclick="this.parentElement.classList.toggle('open')">${f.q}<i class="fa-solid fa-chevron-down faq-arrow"></i></button><div class="faq-answer"><p>${f.a}</p></div></div>`).join('');
+
+    // Toast
+    function showSiteToast(t,m){const el=document.getElementById('siteToast');el.innerHTML=`<div class="site-toast-inner"><strong>${t}</strong> ${m}</div>`;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500);}
+    window.showSiteToast=showSiteToast;
   </script>
 </body>
 </html>

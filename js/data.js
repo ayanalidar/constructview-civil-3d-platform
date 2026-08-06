@@ -325,11 +325,107 @@ const APP_DATA = {
 
   // Blog / Resources preview
   blogPosts: [
-    { title: 'Getting Started with BIM Clash Detection', date: '2026-07-28', readTime: '8 min', tag: 'Guide', excerpt: 'Learn how to set up your first clash detection run, interpret results, and build a coordination workflow.' },
-    { title: '5 Ways 3D Visualization Wins Client Approvals Faster', date: '2026-07-20', readTime: '6 min', tag: 'Business', excerpt: 'How civil firms are cutting approval cycles from weeks to days using browser-based 3D.' },
-    { title: 'IFC vs DWG vs RVT: Which Format Should You Use?', date: '2026-07-12', readTime: '5 min', tag: 'Technical', excerpt: 'A comparison of the three most common BIM/CAD formats and how to avoid conversion headaches.' },
-    { title: 'White-Label BIM Portals: A New Revenue Stream', date: '2026-07-05', readTime: '7 min', tag: 'Business', excerpt: 'How engineering consultancies are turning BIM expertise into recurring revenue via branded portals.' }
-  ]
+    { title: 'Getting Started with BIM Clash Detection: A Practical Guide', date: '2026-07-28', readTime: '8 min', tag: 'Guide', excerpt: 'Learn how to set up your first clash detection run, interpret results, and build a coordination workflow that catches conflicts before they reach the site.' },
+    { title: '5 Ways 3D Visualization Wins Client Approvals Faster', date: '2026-07-20', readTime: '6 min', tag: 'Business', excerpt: 'How civil firms are cutting approval cycles from weeks to days using browser-based 3D walkthroughs and annotated screenshots.' },
+    { title: 'IFC vs DWG vs RVT: Which Format Should You Use?', date: '2026-07-12', readTime: '5 min', tag: 'Technical', excerpt: 'A comparison of the three most common BIM/CAD formats, when to use each, and how to avoid conversion headaches.' },
+    { title: 'White-Label BIM Portals: A New Revenue Stream for Consultants', date: '2026-07-05', readTime: '7 min', tag: 'Business', excerpt: 'How engineering consultancies are turning BIM expertise into recurring revenue by offering branded 3D portals to contractor clients.' },
+    { title: '4D Construction Scheduling: Linking Time to Your 3D Model', date: '2026-06-28', readTime: '9 min', tag: 'Technical', excerpt: 'Step-by-step guide to creating 4D animations that show construction sequence over time — from foundation to finish.' },
+    { title: 'How to Reduce RFIs by 50% with Model-Based Collaboration', date: '2026-06-15', readTime: '6 min', tag: 'Guide', excerpt: 'Real strategies from firms that slashed Requests for Information by moving design reviews into the 3D model.' },
+  ],
+
+  // Marketing site features (richer than app features)
+  siteFeatures: [
+    { icon: 'fa-cube', color: 'var(--color-accent)', title: 'Real-Time 3D Viewer', desc: 'Upload IFC, RVT, DWG, SKP, GLB, OBJ, FBX, STEP — view instantly in WebGL. Walk from outside facade to interior rooms in one seamless motion. No plugins, no installs.', items: ['360-degree orbit, pan, zoom', 'First-person walkthrough mode', 'Wireframe & X-ray transparency', 'Real-time shadows & ambient occlusion'] },
+    { icon: 'fa-scissors', color: '#10b981', title: 'Section Clipping', desc: 'Slice through any axis to inspect internal structure, MEP routing, and rebar placement. Live clipping planes update instantly as you drag the position slider.', items: ['X, Y, Z axis cuts with slider control', 'Visual cut plane indicators', 'One-click clear and restore', 'Export section views as PNG'] },
+    { icon: 'fa-triangle-exclamation', color: '#f59e0b', title: 'Clash Detection Engine', desc: 'Automatically find conflicts between disciplines. MEP pipe through a beam? Electrical tray vs HVAC duct? Flagged instantly with severity grading. Export clash reports as PDF.', items: ['Cross-discipline bounding-box scan', 'Critical/Warning/Minor severity levels', 'Pulsing visual markers at clash points', 'Exportable clash report (PDF/CSV)'] },
+    { icon: 'fa-ruler-combined', color: '#6366f1', title: 'On-Model Measurement', desc: 'Click any two points directly on the 3D surface. Real-time dashed preview line, then a permanent labeled measurement in meters. No separate tool needed.', items: ['Point-to-point distance (meters)', 'Live dashed preview while hovering', 'Floating labels persist in scene', 'Clear all or clear individual'] },
+    { icon: 'fa-palette', color: '#ec4899', title: 'White-Label Branding', desc: 'Every client gets their own branded experience. Swap logo, colors, domain, and role names from a simple admin panel. The platform looks like it was built just for them.', items: ['8 preset color themes + custom hex', 'Custom domain & logo upload', 'Watermarked exports with client brand', 'Rename all user roles per tenant'] },
+    { icon: 'fa-users-gear', color: '#14b8a6', title: 'Role-Based Access Control', desc: 'Project Manager, Designer, Site Supervisor, Client — each sees exactly what they need. Set permissions per role: view-only, annotate, edit, or full admin.', items: ['5 predefined roles + custom', 'Per-project access control', 'Client download restrictions', 'Audit log of all access events'] },
+    { icon: 'fa-comment-dots', color: '#f97316', title: 'BIM Annotation & Issue Tracking', desc: 'Pin comments directly on the 3D model surface. Assign issues to team members. Track every item from open to resolved with full history.', items: ['Click-to-place annotation markers', 'Assign tasks to team members', 'Status flow: open → in-progress → resolved', 'Linked to exact model coordinates'] },
+    { icon: 'fa-mobile-screen', color: '#8b5cf6', title: 'Mobile & Tablet Ready', desc: 'Full responsive design. Site workers view models on their phone at the construction site. Tablets for client presentations. Same experience everywhere.', items: ['Responsive at all screen sizes', 'Touch-optimized orbit controls', 'Offline cache for remote sites', 'Camera integration for site photos'] },
+    { icon: 'fa-file-export', color: '#ef4444', title: 'Export & Reporting', desc: 'Export screenshots, PDF clash reports, model files, and BIM data. All exports can include your client logo as watermark for professional delivery.', items: ['High-res PNG screenshots', 'PDF clash & measurement reports', 'GLB/glTF model downloads', 'CSV BIM data extraction'] },
+  ],
+
+  // More competitor rows
+  competitorRows: [
+    { feature: '3D Viewer (no software install)', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: 'White-Label Branding', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+    { feature: 'Clash Detection', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Section Clipping', cv: true, autodesk: true, trimble: true, dalux: false, bimCollab: true },
+    { feature: 'On-Model Measurement', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: 'BIM Annotation & Issue Tracking', cv: true, autodesk: true, trimble: false, dalux: true, bimCollab: true },
+    { feature: 'Multi-Discipline Support', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Role-Based Access', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Custom Domain', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+    { feature: 'Mobile Responsive', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: false },
+    { feature: '8+ File Formats (IFC/RVT/DWG/GLB)', cv: true, autodesk: true, trimble: true, dalux: true, bimCollab: true },
+    { feature: 'Full REST API Access', cv: true, autodesk: true, trimble: true, dalux: false, bimCollab: true },
+    { feature: 'Per-Project Pricing Model', cv: true, autodesk: false, trimble: false, dalux: true, bimCollab: false },
+    { feature: 'Multi-Tenant White-Label', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+    { feature: 'On-Premise Deployment Option', cv: true, autodesk: true, trimble: false, dalux: false, bimCollab: true },
+    { feature: 'Watermarked Client Exports', cv: true, autodesk: false, trimble: false, dalux: false, bimCollab: false },
+  ],
+
+  // More partners with descriptions
+  partnerDetails: [
+    { name: 'Autodesk Revit', desc: 'Native RVT import', icon: 'fa-building' },
+    { name: 'Trimble Connect', desc: 'BIM data sync', icon: 'fa-link' },
+    { name: 'SketchUp', desc: 'SKP direct import', icon: 'fa-cube' },
+    { name: 'Rhino 3D', desc: 'Complex geometry', icon: 'fa-draw-polygon' },
+    { name: 'AutoCAD', desc: 'DWG/DXF support', icon: 'fa-pen-ruler' },
+    { name: 'Navisworks', desc: 'Clash data import', icon: 'fa-clipboard-check' },
+    { name: 'Tekla Structures', desc: 'Steel detailing', icon: 'fa-grip-lines' },
+    { name: 'ArchiCAD', desc: 'BIM collaboration', icon: 'fa-compass-drafting' },
+    { name: 'Procore', desc: 'Project mgmt sync', icon: 'fa-hard-hat' },
+    { name: 'Bluebeam', desc: 'PDF markups', icon: 'fa-file-pdf' },
+    { name: 'Microsoft Teams', desc: 'Notifications', icon: 'fa-comment' },
+    { name: 'Slack', desc: 'Alerts & updates', icon: 'fa-slack' },
+  ],
+
+  // More testimonials
+  moreTestimonials: [
+    { quote: 'We used to send PDF markups back and forth for weeks. Now clients walk through the 3D model on their phone and approve changes same-day. Game changer.', author: 'Rajesh Kumar', role: 'Director, Kumar Constructions', initials: 'RK', color: '#0ea5e9' },
+    { quote: 'Clash detection alone saved us ₹12 lakh in rework on our hospital project. Finding a plumbing riser intersecting a column before pouring concrete is priceless.', author: 'Meera Patel', role: 'Chief Engineer, Patel Infra', initials: 'MP', color: '#10b981' },
+    { quote: 'We white-labeled ConstructView for 4 contractor clients. Each one thinks we built them a custom platform. Our brand value shot up overnight.', author: 'Arun Sharma', role: 'CEO, BuildTech Solutions', initials: 'AS', color: '#6366f1' },
+    { quote: 'The measurement tool alone replaced two separate apps we used. Click-click on the model and you have your distance. My site supervisors love how simple it is.', author: 'David Rodriguez', role: 'Site Supervisor, Tata Projects', initials: 'DR', color: '#ef4444' },
+    { quote: 'We run clash detection before every concrete pour now. Caught 6 critical MEP-Structure conflicts on the TechPark project that would have cost ₹45 lakhs to fix on-site.', author: 'Nina Kapoor', role: 'Lead Architect, DesignWorks', initials: 'NK', color: '#8b5cf6' },
+    { quote: 'The white-label feature is brilliant. We set up a branded portal for Godrej in 2 hours. They think we have a 20-person dev team. It is just me and ConstructView.', author: 'Lisa Sung', role: 'Client Relations, BuildVision', initials: 'LS', color: '#ec4899' },
+  ],
+
+  // Security & Compliance
+  securityFeatures: [
+    { title: 'Encryption at Rest & Transit', desc: 'All model files and project data encrypted using AES-256 at rest and TLS 1.3 in transit.', icon: 'fa-shield-halved' },
+    { title: 'Role-Based Access Control', desc: 'Granular permissions: Super Admin, Project Manager, Designer, Site Worker, Client, Read-Only. Every action is logged.', icon: 'fa-user-lock' },
+    { title: 'Audit Logging', desc: 'Complete audit trail of who accessed which model, when, and what actions they performed. Exportable for compliance.', icon: 'fa-clipboard-list' },
+    { title: 'On-Premise Deployment', desc: 'Enterprise customers can deploy ConstructView on their own infrastructure. Data never leaves your network.', icon: 'fa-server' },
+    { title: 'SSO / SAML Integration', desc: 'Enterprise SSO via SAML 2.0, OpenID Connect, or LDAP. Integrate with your existing identity provider.', icon: 'fa-key' },
+    { title: 'GDPR & ISO 27001 Ready', desc: 'Built with GDPR compliance in mind. Data residency options. ISO 27001-aligned security practices.', icon: 'fa-file-shield' },
+  ],
+
+  // Getting Started steps
+  gettingStarted: [
+    { step: '1', title: 'Upload Your First Model', desc: 'Drag and drop any BIM/CAD file — IFC, RVT, DWG, SKP, GLB. The 3D viewer renders it instantly in your browser. No software to install. No training needed.', icon: 'fa-cloud-arrow-up' },
+    { step: '2', title: 'Explore with Interactive Tools', desc: 'Orbit around the model. Walk through rooms. Slice sections to see inside. Measure distances. The entire toolset is point-and-click intuitive.', icon: 'fa-magnifying-glass' },
+    { step: '3', title: 'Invite Your Team & Clients', desc: 'Add team members with specific roles. Share a link with clients — they can view the 3D model without creating an account. Set permissions per project.', icon: 'fa-user-plus' },
+    { step: '4', title: 'Brand It as Your Own', desc: 'Go to Settings. Upload your logo. Pick your colors. Set your custom domain. In 5 minutes the platform looks like you built it from scratch.', icon: 'fa-palette' },
+  ],
+
+  // Awards & recognition
+  awards: [
+    { title: 'Best Construction Tech', org: 'NAREDCO', year: '2026' },
+    { title: 'Top BIM Platform', org: 'CIO Review India', year: '2026' },
+    { title: 'Innovation in Infrastructure', org: 'FICCI', year: '2025' },
+    { title: 'Engineering Excellence', org: 'IEI', year: '2025' },
+  ],
+
+  // Roadmap items
+  roadmap: [
+    { title: '4D Construction Sequencing', status: 'In Development', eta: 'Q4 2026', desc: 'Link your 3D model to a construction schedule. See the building rise floor-by-floor over time.' },
+    { title: 'AI Quantity Takeoff', status: 'In Development', eta: 'Q4 2026', desc: 'Upload your BIM model and get automatic concrete, steel, and material quantity estimates.' },
+    { title: 'Drone Point Cloud Overlay', status: 'Planned', eta: 'Q1 2027', desc: 'Overlay drone survey point clouds on your 3D model for real-time progress verification.' },
+    { title: 'VR Headset Support (WebXR)', status: 'Planned', eta: 'Q2 2027', desc: 'Put on a Meta Quest or Apple Vision Pro and walk through your project at 1:1 scale.' },
+    { title: 'Generative Design Integration', status: 'Research', eta: 'TBD', desc: 'AI-powered design alternatives based on your constraints — explore 100 options in minutes.' },
+  ],
 };
 
 // Helper: format date
