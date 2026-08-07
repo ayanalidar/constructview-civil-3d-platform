@@ -3,9 +3,25 @@
 // ==============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-  applyBrandColors();
-  initSidebar();
-  initPage();
+  try {
+    const start = performance.now();
+    applyBrandColors();
+    initSidebar();
+    initPage();
+    const elapsed = (performance.now() - start).toFixed(0);
+    // Set status indicator
+    const status = document.getElementById('topBarStatus');
+    if (status) { status.textContent = 'Ready'; status.style.color = 'var(--color-accent)'; }
+    console.log('%c[ConstructView] %cInit OK %c' + elapsed + 'ms', 'color:#0ea5e9;font-weight:bold', 'color:#10b981', 'color:#888');
+  } catch (err) {
+    const msg = 'Init Error: ' + err.message;
+    console.error('[ConstructView]', err);
+    const status = document.getElementById('topBarStatus');
+    if (status) { status.textContent = msg; status.style.color = '#ef4444'; }
+    // Also show in first stat card
+    const sp = document.getElementById('statProjects');
+    if (sp) sp.textContent = 'ERR';
+  }
 });
 
 // ================ SIDEBAR ================
@@ -41,11 +57,13 @@ function initSidebar() {
 // ================ PAGE ROUTING ================
 function initPage() {
   const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  console.log('[ConstructView] initPage: ' + currentPage);
 
   // Apply brand colors
   applyBrandColors();
 
-  switch (currentPage) {
+  try {
+    switch (currentPage) {
     case 'index.html':
     case '':
       initDashboard();
@@ -67,6 +85,11 @@ function initPage() {
     case 'settings.html':
       initSettings();
       break;
+  }
+  } catch (err) {
+    console.error('[ConstructView] Page init failed:', err);
+    const sp = document.getElementById('statProjects');
+    if (sp) sp.textContent = '❗';
   }
 }
 
