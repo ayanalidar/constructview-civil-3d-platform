@@ -121,9 +121,13 @@
 .designer-canvas.cad-mode { cursor: crosshair; }
 
 /* Floor Plan Panel */
-#floorplanPanel .chip[data-tool="wall"] { border-color: var(--color-accent); }
+#floorplanPanel .chip[data-tool="wall"] { border-color: #e8e0d8; }
 #floorplanPanel .chip[data-tool="door"] { border-color: #92400e; }
 #floorplanPanel .chip[data-tool="window"] { border-color: #0ea5e9; }
+#floorplanPanel .chip[data-tool="staircase"] { border-color: #8b8682; }
+#floorplanPanel .chip[data-tool="column"] { border-color: #c0b8b0; }
+#floorplanPanel .chip[data-tool="dimension"] { border-color: #ff6b35; }
+#floorplanPanel .chip[data-tool="select"] { border-color: var(--color-accent); }
 #floorplanPanel .chip[data-tool="delete"] { border-color: #ef4444; }
 
 #floorplanPanel .chip-row { display: flex; gap: 0.25rem; flex-wrap: wrap; }

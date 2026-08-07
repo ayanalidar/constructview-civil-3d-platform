@@ -106,13 +106,16 @@
 
             <!-- Floor Plan Tools (Revit-style) -->
             <div class="panel-section" id="floorplanPanel" style="display:none;">
-              <h4><i class="fa-solid fa-draw-polygon"></i> Floor Plan <span style="font-size:0.65rem;color:var(--color-accent);margin-left:auto;">Esc=cancel | Del=delete</span></h4>
+              <h4><i class="fa-solid fa-ruler-combined"></i> Floor Plan <span style="font-size:0.65rem;color:var(--color-accent);margin-left:auto;">Esc=cancel | Del=delete | Ctrl+Z=undo | 1-8=tools</span></h4>
               <div class="chip-row" id="fpToolChips">
-                <button class="chip active" data-tool="wall"><i class="fa-solid fa-grip-lines"></i> Wall</button>
-                <button class="chip" data-tool="door"><i class="fa-solid fa-door-open"></i> Door</button>
-                <button class="chip" data-tool="window"><i class="fa-solid fa-square"></i> Window</button>
-                <button class="chip" data-tool="select"><i class="fa-solid fa-arrow-pointer"></i></button>
-                <button class="chip" data-tool="delete"><i class="fa-solid fa-eraser"></i></button>
+                <button class="chip active" data-tool="wall" title="1"><i class="fa-solid fa-grip-lines"></i> Wall</button>
+                <button class="chip" data-tool="door" title="2"><i class="fa-solid fa-door-open"></i> Door</button>
+                <button class="chip" data-tool="window" title="3"><i class="fa-solid fa-square"></i> Window</button>
+                <button class="chip" data-tool="staircase" title="4"><i class="fa-solid fa-stairs"></i> Stairs</button>
+                <button class="chip" data-tool="column" title="5"><i class="fa-solid fa-grip-vertical"></i> Column</button>
+                <button class="chip" data-tool="dimension" title="6"><i class="fa-solid fa-ruler"></i> Dim</button>
+                <button class="chip" data-tool="select" title="7"><i class="fa-solid fa-arrow-pointer"></i></button>
+                <button class="chip" data-tool="delete" title="8"><i class="fa-solid fa-eraser"></i></button>
               </div>
               <div class="param-group" style="margin-top:0.5rem;"><label>Floor Level</label>
                 <div class="chip-row" id="fpFloorChips">
@@ -126,9 +129,11 @@
               <div class="param-group"><label>Wall Thickness <span id="fpThickVal">0.2</span>m</label><input type="range" min="0.1" max="0.5" value="0.2" step="0.05" id="fpWallThick"></div>
               <div class="param-group"><label>Grid Snap <span id="fpSnapVal">0.5</span>m</label><input type="range" min="0.1" max="2" value="0.5" step="0.1" id="fpSnapSize"></div>
               <div class="toggle-row"><label>Show Upper Floors</label><button class="toggle active" id="togUpperFloors">ON</button></div>
-              <button class="btn btn-accent btn-sm" id="btnGenSlabs" style="width:100%;justify-content:center;margin-top:0.5rem;"><i class="fa-solid fa-layer-group"></i> Generate Floor Slabs</button>
-              <button class="btn btn-outline btn-sm" id="btnClearFP" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear All</button>
-              <p style="font-size:0.7rem;color:var(--color-accent);margin-top:0.5rem;text-align:center;" id="fpStats">0 walls · 0 doors · 0 windows</p>
+              <button class="btn btn-accent btn-sm" id="btnDetectRooms" style="width:100%;justify-content:center;margin-top:0.5rem;"><i class="fa-solid fa-vector-square"></i> Detect Rooms</button>
+              <button class="btn btn-accent btn-sm" id="btnGenSlabs" style="width:100%;justify-content:center;margin-top:0.35rem;"><i class="fa-solid fa-layer-group"></i> Generate Floor Slabs</button>
+              <button class="btn btn-outline btn-sm" id="btnClearFP" style="margin-top:0.35rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear All</button>
+              <p style="font-size:0.7rem;color:var(--color-accent);margin-top:0.5rem;text-align:center;" id="fpStats">0 walls · 0 doors · 0 windows · 0 stairs · 0 cols</p>
+              <p style="font-size:0.68rem;color:#ffdd44;text-align:center;display:none;" id="fpOrthoHint"><i class="fa-solid fa-grip-lines"></i> Ortho Lock ACTIVE (Shift)</p>
             </div>
 
             <!-- Features -->
@@ -391,6 +396,15 @@
       // Generate slabs
       document.getElementById('btnGenSlabs')?.addEventListener('click', () => floorPlan.generateSlabs());
 
+      // Detect rooms
+      document.getElementById('btnDetectRooms')?.addEventListener('click', () => floorPlan.detectRooms());
+
+      // Ortho lock indicator
+      window.addEventListener('floorplan_orthoChanged', e => {
+        const hint = document.getElementById('fpOrthoHint');
+        if (hint) hint.style.display = e.detail.active ? '' : 'none';
+      });
+
       // Clear all floor plan
       document.getElementById('btnClearFP')?.addEventListener('click', () => {
         floorPlan.clearAll();
@@ -398,7 +412,7 @@
       });
 
       // Floor plan events for stats
-      ['wallCreated','doorPlaced','windowPlaced','objectDeleted','cleared','slabsGenerated'].forEach(ev => {
+      ['wallCreated','doorPlaced','windowPlaced','staircaseCreated','columnPlaced','dimensionCreated','objectDeleted','cleared','slabsGenerated','roomsDetected'].forEach(ev => {
         window.addEventListener('floorplan_' + ev, () => updateFPStats());
       });
 
@@ -406,7 +420,7 @@
         const el = document.getElementById('fpStats');
         if (el) {
           const s = floorPlan.getStats();
-          el.textContent = s.walls + ' walls · ' + s.doors + ' doors · ' + s.windows + ' windows';
+          el.textContent = s.walls + ' walls · ' + s.doors + ' doors · ' + s.windows + ' windows · ' + s.stairs + ' stairs · ' + s.columns + ' cols';
         }
       }
       window.addEventListener('floorplan_cleared', () => updateFPStats());
