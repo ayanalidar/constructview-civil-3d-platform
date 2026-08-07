@@ -120,6 +120,18 @@
 /* CAD-style cursor */
 .designer-canvas.cad-mode { cursor: crosshair; }
 
+/* Floor Plan Panel */
+#floorplanPanel .chip[data-tool="wall"] { border-color: var(--color-accent); }
+#floorplanPanel .chip[data-tool="door"] { border-color: #92400e; }
+#floorplanPanel .chip[data-tool="window"] { border-color: #0ea5e9; }
+#floorplanPanel .chip[data-tool="delete"] { border-color: #ef4444; }
+
+#floorplanPanel .chip-row { display: flex; gap: 0.25rem; flex-wrap: wrap; }
+#floorplanPanel .chip-row .chip { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+#floorplanPanel .toggle-row { display: flex; justify-content: space-between; align-items: center; margin-top: 0.5rem; font-size: 0.8rem; }
+#floorplanPanel .toggle-row .toggle { padding: 0.25rem 0.75rem; border-radius: 1rem; font-size: 0.72rem; border: 1px solid var(--color-border); background: transparent; color: var(--color-text); cursor: pointer; transition: all 0.2s; }
+#floorplanPanel .toggle-row .toggle.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
 /* Responsive */
 @media (max-width: 1024px) { .designer-layout { grid-template-columns: 280px 1fr; } }
 @media (max-width: 768px) {

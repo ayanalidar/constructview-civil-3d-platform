@@ -31,7 +31,7 @@
         <div class="topbar-left"><button class="btn-icon" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button><div class="breadcrumb"><span>Building Designer</span></div></div>
         <div class="topbar-right">
           <button class="btn btn-outline btn-sm" id="btnPlanView"><i class="fa-solid fa-map"></i> Plan View</button>
-          <button class="btn btn-accent btn-sm" id="btnDrawMode"><i class="fa-solid fa-draw-polygon"></i> Draw Mode</button>
+          <button class="btn btn-accent btn-sm" id="btnDrawMode"><i class="fa-solid fa-ruler-combined"></i> Floor Plan Mode</button>
           <button class="btn btn-outline btn-sm" onclick="window.__designer?.resetDefault()"><i class="fa-solid fa-rotate-left"></i> Reset</button>
           <button class="btn btn-accent btn-sm"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         </div>
@@ -104,29 +104,31 @@
               <div class="param-group" id="winCountGrp"><label>Per Side <span id="winCountVal">3</span></label><input type="range" min="2" max="6" value="3" id="paramWindowCount"></div>
             </div>
 
-            <!-- Draw Mode Tools -->
-            <div class="panel-section" id="drawToolsPanel" style="display:none;">
-              <h4><i class="fa-solid fa-draw-polygon"></i> Draw Tools <span style="font-size:0.65rem;color:var(--color-accent);margin-left:auto;">Esc to cancel | Ctrl+Z undo</span></h4>
-              <div class="chip-row" id="drawToolChips">
-                <button class="chip active" data-tool="line"><i class="fa-solid fa-minus"></i> Line</button>
-                <button class="chip" data-tool="rect"><i class="fa-solid fa-square"></i> Rect</button>
-                <button class="chip" data-tool="circle"><i class="fa-solid fa-circle"></i> Circle</button>
-                <button class="chip" data-tool="polygon"><i class="fa-solid fa-draw-polygon"></i> Poly</button>
-                <button class="chip" data-tool="arc"><i class="fa-solid fa-arc"></i> Arc</button>
+            <!-- Floor Plan Tools (Revit-style) -->
+            <div class="panel-section" id="floorplanPanel" style="display:none;">
+              <h4><i class="fa-solid fa-draw-polygon"></i> Floor Plan <span style="font-size:0.65rem;color:var(--color-accent);margin-left:auto;">Esc=cancel | Del=delete</span></h4>
+              <div class="chip-row" id="fpToolChips">
+                <button class="chip active" data-tool="wall"><i class="fa-solid fa-grip-lines"></i> Wall</button>
+                <button class="chip" data-tool="door"><i class="fa-solid fa-door-open"></i> Door</button>
+                <button class="chip" data-tool="window"><i class="fa-solid fa-square"></i> Window</button>
+                <button class="chip" data-tool="select"><i class="fa-solid fa-arrow-pointer"></i></button>
+                <button class="chip" data-tool="delete"><i class="fa-solid fa-eraser"></i></button>
               </div>
-              <div class="param-group" style="margin-top:0.5rem;">
-                <label>Grid Snap <span id="snapSizeVal">0.5m</span></label>
-                <input type="range" min="0.1" max="2" value="0.5" step="0.1" id="paramSnapSize">
-              </div>
-              <div id="extrudeControls" style="margin-top:0.5rem;">
-                <div class="param-group">
-                  <label>Extrude Height <span id="extrudeHeightVal">3m</span></label>
-                  <input type="range" min="0.5" max="10" value="3" step="0.5" id="paramExtrudeHeight">
+              <div class="param-group" style="margin-top:0.5rem;"><label>Floor Level</label>
+                <div class="chip-row" id="fpFloorChips">
+                  <button class="chip active" data-floor="0">Ground</button>
+                  <button class="chip" data-floor="1">1st</button>
+                  <button class="chip" data-floor="2">2nd</button>
+                  <button class="chip" data-floor="3">3rd</button>
                 </div>
-                <button class="btn btn-accent btn-sm" id="btnExtrude" style="width:100%;justify-content:center;"><i class="fa-solid fa-cubes"></i> Extrude Last Shape to 3D</button>
               </div>
-              <button class="btn btn-outline btn-sm" id="btnClearDraw" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear All Drawings</button>
-              <p style="font-size:0.7rem;color:var(--color-accent);margin-top:0.5rem;text-align:center;" id="drawShapeCount">0 shapes drawn</p>
+              <div class="param-group"><label>Wall Height <span id="fpWallHVal">3.0</span>m</label><input type="range" min="2.4" max="4.5" value="3.0" step="0.1" id="fpWallHeight"></div>
+              <div class="param-group"><label>Wall Thickness <span id="fpThickVal">0.2</span>m</label><input type="range" min="0.1" max="0.5" value="0.2" step="0.05" id="fpWallThick"></div>
+              <div class="param-group"><label>Grid Snap <span id="fpSnapVal">0.5</span>m</label><input type="range" min="0.1" max="2" value="0.5" step="0.1" id="fpSnapSize"></div>
+              <div class="toggle-row"><label>Show Upper Floors</label><button class="toggle active" id="togUpperFloors">ON</button></div>
+              <button class="btn btn-accent btn-sm" id="btnGenSlabs" style="width:100%;justify-content:center;margin-top:0.5rem;"><i class="fa-solid fa-layer-group"></i> Generate Floor Slabs</button>
+              <button class="btn btn-outline btn-sm" id="btnClearFP" style="margin-top:0.5rem;width:100%;justify-content:center;font-size:0.75rem;"><i class="fa-solid fa-trash"></i> Clear All</button>
+              <p style="font-size:0.7rem;color:var(--color-accent);margin-top:0.5rem;text-align:center;" id="fpStats">0 walls · 0 doors · 0 windows</p>
             </div>
 
             <!-- Features -->
@@ -186,7 +188,7 @@
   <script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }</script>
   <script type="module">
     import { BuildingDesigner, MATERIAL_PRESETS } from './js/designer3d.js';
-    import { DrawMode } from './js/drawmode.js';
+    import { FloorPlanEngine } from './js/floorplan.js';
 
     // Module scripts auto-wait for DOM — run directly, no DOMContentLoaded needed
     applyBrandColors();
@@ -198,27 +200,26 @@
     const designer = new BuildingDesigner(canvas);
     window.__designer = designer;
 
-    // Draw mode
-    const drawMode = new DrawMode(designer);
-    window.__drawMode = drawMode;
-    let drawActive = false;
+    // Floor Plan (Revit-style)
+    const floorPlan = new FloorPlanEngine(designer.scene, designer.camera, designer.renderer, designer.controls);
+    window.__floorPlan = floorPlan;
+    let fpActive = false;
 
-    // Draw mode toggle
+    // Floor Plan toggle
     const btnDrawMode = document.getElementById('btnDrawMode');
-    const drawPanel = document.getElementById('drawToolsPanel');
+    const fpPanel = document.getElementById('floorplanPanel');
     if (btnDrawMode) {
       btnDrawMode.addEventListener('click', () => {
-        drawActive = !drawActive;
-        drawMode.toggle(drawActive);
-        btnDrawMode.classList.toggle('active', drawActive);
-        btnDrawMode.innerHTML = drawActive
-          ? '<i class="fa-solid fa-xmark"></i> Exit Draw'
-          : '<i class="fa-solid fa-draw-polygon"></i> Draw Mode';
-        if (drawPanel) drawPanel.style.display = drawActive ? 'block' : 'none';
-        // Crosshair cursor in draw mode
-        canvas.style.cursor = drawActive ? 'crosshair' : '';
-        // Notify designer
-        designer._drawModeActive = drawActive;
+        fpActive = !fpActive;
+        floorPlan.toggle(fpActive);
+        btnDrawMode.classList.toggle('active', fpActive);
+        btnDrawMode.innerHTML = fpActive
+          ? '<i class="fa-solid fa-xmark"></i> Exit Floor Plan'
+          : '<i class="fa-solid fa-ruler-combined"></i> Floor Plan Mode';
+        if (fpPanel) fpPanel.style.display = fpActive ? '' : 'none';
+        canvas.style.cursor = fpActive ? 'crosshair' : '';
+        designer._fpActive = fpActive;
+        updateFPStats();
       });
     }
 
@@ -340,58 +341,75 @@
       });
       window.addEventListener('presetApplied', () => updateStats());
 
-      // === DRAW MODE TOOLS ===
-      const drawToolChips = document.querySelectorAll('#drawToolChips .chip');
-      if (drawToolChips.length > 0) {
-        drawToolChips.forEach(c => c.addEventListener('click', () => {
-          drawToolChips.forEach(x => x.classList.remove('active'));
-          c.classList.add('active');
-          drawMode.setTool(c.dataset.tool);
-        }));
-      }
+      // === FLOOR PLAN TOOLS (Revit-style) ===
+      document.querySelectorAll('#fpToolChips .chip').forEach(c => c.addEventListener('click', () => {
+        document.querySelectorAll('#fpToolChips .chip').forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        floorPlan.setTool(c.dataset.tool);
+      }));
+
+      // Floor selector
+      document.querySelectorAll('#fpFloorChips .chip').forEach(c => c.addEventListener('click', () => {
+        document.querySelectorAll('#fpFloorChips .chip').forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        floorPlan.setFloor(parseInt(c.dataset.floor));
+      }));
+
+      // Wall height slider
+      const fpWallH = document.getElementById('fpWallHeight');
+      if (fpWallH) fpWallH.addEventListener('input', e => {
+        floorPlan.wallHeight = parseFloat(e.target.value);
+        const l = document.getElementById('fpWallHVal');
+        if (l) l.textContent = e.target.value;
+      });
+
+      // Wall thickness slider
+      const fpThick = document.getElementById('fpWallThick');
+      if (fpThick) fpThick.addEventListener('input', e => {
+        floorPlan.wallThickness = parseFloat(e.target.value);
+        const l = document.getElementById('fpThickVal');
+        if (l) l.textContent = e.target.value;
+      });
 
       // Snap size
-      const snapSlider = document.getElementById('paramSnapSize');
-      const snapLabel = document.getElementById('snapSizeVal');
-      if (snapSlider) {
-        snapSlider.addEventListener('input', e => {
-          drawMode.setSnapSize(parseFloat(e.target.value));
-          if (snapLabel) snapLabel.textContent = e.target.value + 'm';
-        });
-      }
-
-      // Extrude
-      const extH = document.getElementById('paramExtrudeHeight');
-      const extHL = document.getElementById('extrudeHeightVal');
-      if (extH) extH.addEventListener('input', e => { if (extHL) extHL.textContent = e.target.value + 'm'; });
-      const btnExtrude = document.getElementById('btnExtrude');
-      if (btnExtrude) {
-        btnExtrude.addEventListener('click', () => {
-          const h = extH ? parseFloat(extH.value) : 3;
-          drawMode.extrudeLast(h);
-        });
-      }
-
-      // Clear drawings
-      const btnClear = document.getElementById('btnClearDraw');
-      if (btnClear) {
-        btnClear.addEventListener('click', () => {
-          drawMode.clearAll();
-          const sc = document.getElementById('drawShapeCount');
-          if (sc) sc.textContent = '0 shapes drawn';
-        });
-      }
-
-      // Draw events
-      window.addEventListener('shapeDrawn', e => {
-        const sc = document.getElementById('drawShapeCount');
-        if (sc) sc.textContent = drawMode.getShapeCount() + ' shapes drawn';
-        showToast('Shape Drawn', e.detail.type + ' created');
+      const fpSnap = document.getElementById('fpSnapSize');
+      if (fpSnap) fpSnap.addEventListener('input', e => {
+        floorPlan.gridSnap = parseFloat(e.target.value);
+        const l = document.getElementById('fpSnapVal');
+        if (l) l.textContent = e.target.value;
       });
-      window.addEventListener('drawCleared', () => {
-        const sc = document.getElementById('drawShapeCount');
-        if (sc) sc.textContent = '0 shapes drawn';
+
+      // Toggle upper floors
+      const togUF = document.getElementById('togUpperFloors');
+      if (togUF) togUF.addEventListener('click', () => {
+        floorPlan.showUpperFloors = !floorPlan.showUpperFloors;
+        togUF.textContent = floorPlan.showUpperFloors ? 'ON' : 'OFF';
+        togUF.classList.toggle('active', floorPlan.showUpperFloors);
+        floorPlan.updateFloorVisibility();
       });
+
+      // Generate slabs
+      document.getElementById('btnGenSlabs')?.addEventListener('click', () => floorPlan.generateSlabs());
+
+      // Clear all floor plan
+      document.getElementById('btnClearFP')?.addEventListener('click', () => {
+        floorPlan.clearAll();
+        updateFPStats();
+      });
+
+      // Floor plan events for stats
+      ['wallCreated','doorPlaced','windowPlaced','objectDeleted','cleared','slabsGenerated'].forEach(ev => {
+        window.addEventListener('floorplan_' + ev, () => updateFPStats());
+      });
+
+      function updateFPStats() {
+        const el = document.getElementById('fpStats');
+        if (el) {
+          const s = floorPlan.getStats();
+          el.textContent = s.walls + ' walls · ' + s.doors + ' doors · ' + s.windows + ' windows';
+        }
+      }
+      window.addEventListener('floorplan_cleared', () => updateFPStats());
 
       function showToast(title, msg) {
         const existing = document.querySelector('.toast');
