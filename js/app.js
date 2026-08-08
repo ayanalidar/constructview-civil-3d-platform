@@ -2,27 +2,34 @@
 // ConstructView — Core Application Logic
 // ==============================================
 
-document.addEventListener('DOMContentLoaded', () => {
-  try {
-    const start = performance.now();
-    applyBrandColors();
-    initSidebar();
-    initPage();
-    const elapsed = (performance.now() - start).toFixed(0);
-    // Set status indicator
-    const status = document.getElementById('topBarStatus');
-    if (status) { status.textContent = 'Ready'; status.style.color = 'var(--color-accent)'; }
-    console.log('%c[ConstructView] %cInit OK %c' + elapsed + 'ms', 'color:#0ea5e9;font-weight:bold', 'color:#10b981', 'color:#888');
-  } catch (err) {
-    const msg = 'Init Error: ' + err.message;
-    console.error('[ConstructView]', err);
-    const status = document.getElementById('topBarStatus');
-    if (status) { status.textContent = msg; status.style.color = '#ef4444'; }
-    // Also show in first stat card
-    const sp = document.getElementById('statProjects');
-    if (sp) sp.textContent = 'ERR';
+(function() {
+  function runInit() {
+    try {
+      const start = performance.now();
+      applyBrandColors();
+      initSidebar();
+      initPage();
+      const elapsed = (performance.now() - start).toFixed(0);
+      const status = document.getElementById('topBarStatus');
+      if (status) { status.textContent = 'Ready'; status.style.color = 'var(--color-accent)'; }
+      console.log('%c[ConstructView] %cInit OK %c' + elapsed + 'ms', 'color:#0ea5e9;font-weight:bold', 'color:#10b981', 'color:#888');
+    } catch (err) {
+      const msg = 'Init Error: ' + err.message;
+      console.error('[ConstructView]', err);
+      const status = document.getElementById('topBarStatus');
+      if (status) { status.textContent = msg; status.style.color = '#ef4444'; }
+      const sp = document.getElementById('statProjects');
+      if (sp) sp.textContent = 'ERR';
+    }
   }
-});
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInit);
+  } else {
+    // DOM already ready (script loaded late)
+    runInit();
+  }
+})();
 
 // ================ SIDEBAR ================
 function initSidebar() {
